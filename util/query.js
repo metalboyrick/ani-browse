@@ -16,6 +16,9 @@ const GET_PAGINATED_ANIME_LIST = gql`
                     medium
                     large
                 }
+                averageScore
+                genres
+                description
             }
         }
     }

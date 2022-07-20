@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Head from "next/head";
 import { LoadingOutlined } from '@ant-design/icons';
-import { Input, Spin } from "antd";
+import { Spin } from "antd";
 
 import Theme from "../styles/theme";
 import AnimeCardHome from "../components/animeCardHome";
@@ -48,6 +48,11 @@ export default function Home({animeList}) {
         setIsSeeMoreLoading(false);
         setCurrentPage(nextPage);
     };
+
+    // search function 
+    const searchPage = useCallback(async () => {
+
+    });
 
     return (
         <div>
@@ -108,19 +113,11 @@ export default function Home({animeList}) {
                         fontWeight: 200
                     }}>Explore your favourite anime.</div>
 
-                    {/* search bar */}
-                    <Input css={{
-                        width: "60%",
-                        "&:focus": {
-                            borderColor: Theme.colors.primary
-                        }
-                    }} placeholder="What are you looking for?"></Input>
-
                     <div css={{
                         fontSize: Theme.fontSize.reg,
                         lineHeight: "20pt",
                         fontWeight: 200,
-                    }}>or <a css={{
+                    }}>and <a css={{
                         fontWeight: "bold",
                         "&:hover": {
                             color: Theme.colors.primary
