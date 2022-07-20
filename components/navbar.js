@@ -29,9 +29,10 @@ export default function Navbar() {
                 </div>
 
                 {/* collection button */}
-                <Button type="primary" css={{
-                    backgroundColor: Theme.colors.primary,
-                    borderColor: "transparent"
+                <Button type="default" shape="round" style={{
+                    backgroundColor: Theme.colors.background,
+                    borderColor: Theme.colors.white,
+                    color: Theme.colors.white
                 }}>
                     Collections
                 </Button>

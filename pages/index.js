@@ -11,7 +11,7 @@ export default function Home() {
                 <title>AniBrowse</title>
                 <meta
                     name="description"
-                    content="Simple application to browse your favourite anime with!"
+                    content="Simple application to browse your favourite anime with."
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
