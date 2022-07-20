@@ -3,7 +3,8 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Head from "next/head";
-import { Input } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Input, Spin } from "antd";
 
 import Theme from "../styles/theme";
 import AnimeCardHome from "../components/animeCardHome";
@@ -24,10 +25,13 @@ export default function Home({animeList}) {
     // the page states
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState(animeList);
+    const [isSeeMoreLoading, setIsSeeMoreLoading] = useState(false);
 
     // function to add pages
     const addCurrentPage = async () => {
         let nextPage = currentPage + 1;
+
+        setIsSeeMoreLoading(true);
 
         const { loading, error, data } = await client.query({
             query: queries.GET_PAGINATED_ANIME_LIST,
@@ -41,6 +45,7 @@ export default function Home({animeList}) {
 
         // update component state
         setCurrentData([...currentData, ...data.Page.media]);
+        setIsSeeMoreLoading(false);
         setCurrentPage(nextPage);
     };
 
@@ -151,7 +156,7 @@ export default function Home({animeList}) {
 
                 </div>
 
-                <a css={{
+                {!isSeeMoreLoading ?  <a css={{
                     marginTop: "40px",
                     fontWeight: "bold",
                     fontSize: Theme.fontSize.reg,
@@ -160,9 +165,8 @@ export default function Home({animeList}) {
                         color: Theme.colors.success
                     }
                 }}
-                onClick={() => addCurrentPage()}
-
-                >See More</a>
+                onClick={() => addCurrentPage()}>See More</a>: <Spin indicator={<LoadingOutlined style={{ fontSize: 24 , color: Theme.colors.primary}} spin />} />}
+                
             </div>
 
 
