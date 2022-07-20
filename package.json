@@ -9,12 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@apollo/client": "^3.6.9",
+    "@emotion/react": "^11.9.3",
+    "antd": "^4.21.7",
+    "graphql": "^16.5.0",
     "next": "12.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "eslint": "8.20.0",
-    "eslint-config-next": "12.2.2"
+    "eslint-config-next": "12.2.2",
+    "jest": "^28.1.3"
   }
 }
