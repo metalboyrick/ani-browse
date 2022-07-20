@@ -68,7 +68,7 @@ export default function AnimeCardHome(props) {
                         
                     </div>
                     <div>
-                        { (isMobile?props.anime.description.substring(0,40):props.anime.description.substring(0,100)) + "..."}
+                        { (isMobile?props.anime.description.substring(0,40):props.anime.description.substring(0,120)) + "..."}
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@ export default function AnimeCardHome(props) {
                     borderRadius: "10px",
                     height: "360px",
                     width: "240px",
-                    opacity : isHover ? 0.5 : 1.0,
+                    opacity : isHover ? 0.30 : 1.0,
                     "@media (max-width: 768px)": {
                         height: "180px",
                         width: "120px",
@@ -89,7 +89,7 @@ export default function AnimeCardHome(props) {
                 <div css={{
                     fontSize: Theme.fontSize.reg,
                     padding: "10px",
-                    opacity : isHover ? 0.5 : 1.0,
+                    opacity : isHover ? 0.30 : 1.0,
                     "@media (max-width: 768px)": {
                         fontSize: "10pt"
                     }
