@@ -11,6 +11,7 @@ export default function AnimeCardHome(props){
             margin: "20px 10px 10px 10px",
             minWidth: "120px",
             maxWidth: "240px",
+            maxHeight: "360px",
             "&:hover":{
                 opacity: 0.5
             },
@@ -24,14 +25,14 @@ export default function AnimeCardHome(props){
                 height: "auto",
                 width: "100%",
             }}
-            src={props.imgUrl}
+            src={props.anime.coverImage.large}
             alt="" />
 
 
             <div css={{
-                paddingTop:"6px",
+                padding:"20px",
                 fontSize: Theme.fontSize.reg
-            }}>{props.caption}</div>
+            }}>{props.anime.title.romaji}</div>
         </div>
     );
 }

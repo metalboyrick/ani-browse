@@ -1,10 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
+import { useRouter } from 'next/router'
 import Head from "next/head";
 import { Input } from "antd";
 
 import Theme from "../styles/theme";
 import AnimeCardHome from "../components/animeCardHome";
+import queries from "../util/query";
+import client from "../util/apollo-client";
 
 // placeholder for home screen banners, to be changed with real server data later
 const banners = [
@@ -13,7 +16,9 @@ const banners = [
     "https://s4.anilist.co/file/anilistcdn/media/anime/banner/22-wVJjA9tGMt4k.jpg"
 ];
 
-export default function Home() {
+
+
+export default function Home({animeList}) {
     return (
         <div>
             <Head>
@@ -56,8 +61,8 @@ export default function Home() {
                     "@media (max-width: 768px)": {
                         paddingLeft: "5%",
                         paddingRight: "5%",
-                        alignItems:"center",
-                        textAlign:"center"
+                        alignItems: "center",
+                        textAlign: "center"
                     }
                 }}>
                     <div css={{
@@ -103,57 +108,59 @@ export default function Home() {
                 "@media (max-width: 1200px)": {
                     marginLeft: "5%",
                     marginRight: "5%",
-                    alignItems:"center",
-                    textAlign:"center"
+                    alignItems: "center",
+                    textAlign: "center"
                 }
             }}>
                 <div css={{
-                
+
                     display: "flex",
                     flexWrap: "wrap",
                     justifyContent: "center"
 
                 }}>
 
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="Naruto"/>
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="One Piece"/>
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="Bleach"/>
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="Naruto"/>
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="Naruto"/>
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="Naruto"/>
-                    <AnimeCardHome 
-                    imgUrl={"https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx20-YJvLbgJQPCoI.jpg"} 
-                    caption="Naruto"/>
+                    {animeList.map(entry => <AnimeCardHome anime={entry}/>)}
 
                     
+
                 </div>
 
                 <a css={{
-                        marginTop: "40px",
-                        fontWeight: "bold",
-                        fontSize: Theme.fontSize.reg,
-                        color: Theme.colors.primary,
-                        "&:hover": {
-                            color: Theme.colors.success
-                        }
+                    marginTop: "40px",
+                    fontWeight: "bold",
+                    fontSize: Theme.fontSize.reg,
+                    color: Theme.colors.primary,
+                    "&:hover": {
+                        color: Theme.colors.success
+                    }
                 }}>See More</a>
             </div>
-           
 
-            
+
+
 
         </div>
     );
+}
+
+export async function getServerSideProps() {
+    console.log("getting static props")
+
+    const { loading, error, data } = await client.query({
+        query: queries.GET_PAGINATED_ANIME_LIST,
+        variables: {
+            page: 1,
+            perPage: 12
+        }
+    });
+
+    if(error) console.log("ERRORRR: ", error);
+    console.log("DATA: ", data);
+
+    return {
+        props: {
+            animeList: data.Page.media
+        },
+    };
 }
