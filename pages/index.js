@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import Head from "next/head";
 import { Input } from "antd";
 
@@ -19,6 +20,30 @@ const banners = [
 
 
 export default function Home({animeList}) {
+
+    // the page states
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentData, setCurrentData] = useState(animeList);
+
+    // function to add pages
+    const addCurrentPage = async () => {
+        let nextPage = currentPage + 1;
+
+        const { loading, error, data } = await client.query({
+            query: queries.GET_PAGINATED_ANIME_LIST,
+            variables: {
+                page: nextPage,
+                perPage: 12
+            }
+        });
+
+        // TODO: handle errors
+
+        // update component state
+        setCurrentData([...currentData, ...data.Page.media]);
+        setCurrentPage(nextPage);
+    };
+
     return (
         <div>
             <Head>
@@ -120,7 +145,7 @@ export default function Home({animeList}) {
 
                 }}>
 
-                    {animeList.map(entry => <AnimeCardHome anime={entry}/>)}
+                    {currentData.map(entry => <AnimeCardHome anime={entry}/>)}
 
                     
 
@@ -134,7 +159,10 @@ export default function Home({animeList}) {
                     "&:hover": {
                         color: Theme.colors.success
                     }
-                }}>See More</a>
+                }}
+                onClick={() => addCurrentPage()}
+
+                >See More</a>
             </div>
 
 
@@ -145,7 +173,6 @@ export default function Home({animeList}) {
 }
 
 export async function getServerSideProps() {
-    console.log("getting static props")
 
     const { loading, error, data } = await client.query({
         query: queries.GET_PAGINATED_ANIME_LIST,
@@ -155,8 +182,7 @@ export async function getServerSideProps() {
         }
     });
 
-    if(error) console.log("ERRORRR: ", error);
-    console.log("DATA: ", data);
+    // TODO: handle errors
 
     return {
         props: {
