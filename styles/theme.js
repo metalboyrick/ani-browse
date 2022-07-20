@@ -10,7 +10,7 @@ const Theme = {
     },
     mediaQuery: {
         breakpoints: [576, 768, 992, 1200],
-        bpMap: (bp) => {return `@media (min-width: ${bp}px)`}
+        bpMap: function (bp){return `@media (min-width: ${bp}px)`;}
     },
     fontSize: {
         reg: '12pt',

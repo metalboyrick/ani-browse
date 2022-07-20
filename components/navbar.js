@@ -14,7 +14,11 @@ export default function Navbar() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    padding: "15px 20% 15px 20%"
+                    padding: "15px 20% 15px 20%",
+                    "@media (max-width: 768px)": {
+                        paddingLeft: "10%",
+                        paddingRight: "10%",
+                    }
             }}>
                 {/* logo */}
                 <div css={{

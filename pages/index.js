@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import Head from "next/head";
-import Theme from "../styles/theme";
 import { Input } from "antd";
 
+import Theme from "../styles/theme";
 import AnimeCardHome from "../components/animeCardHome";
 
 // placeholder for home screen banners, to be changed with real server data later
@@ -27,15 +27,15 @@ export default function Home() {
 
             {/* Header Section */}
             <div css={{
-                width: "100vw",
+                width: "100%",
                 height: "40vh",
                 position: "relative"
             }}>
 
                 <div
                     css={{
-                        width: "100vw",
-                        height: "40vh",
+                        width: "100%",
+                        height: "100%",
                         backgroundImage: `url(${banners[0]})`,
                         backgroundSize: "cover",
                         opacity: 0.35,
@@ -52,16 +52,25 @@ export default function Home() {
                     width: "100%",
                     height: "40vh",
                     paddingLeft: "20%",
-                    paddingRight: "20%"
+                    paddingRight: "20%",
+                    "@media (max-width: 768px)": {
+                        paddingLeft: "5%",
+                        paddingRight: "5%",
+                        alignItems:"center",
+                        textAlign:"center"
+                    }
                 }}>
                     <h1 css={{
                         color: Theme.colors.white,
                         fontWeight: "bold",
-                        lineHeight: "1rem"
+                        lineHeight: "1.5rem",
+                        "@media (max-width: 768px)": {
+                            lineHeight: "2.5rem"
+                        }
                     }}>Hi, Welcome to AniBrowse!</h1>
                     <p css={{
                         fontWeight: 200,
-                        lineHeight: "1rem"
+                        lineHeight: "2rem"
                     }}>Explore your favourite anime.</p>
 
                     {/* search bar */}
@@ -89,7 +98,13 @@ export default function Home() {
                 marginLeft: "20%",
                 marginRight: "20%",
                 textAlign: "center",
-                paddingBottom: "30px"
+                paddingBottom: "40px",
+                "@media (max-width: 1200px)": {
+                    marginLeft: "5%",
+                    marginRight: "5%",
+                    alignItems:"center",
+                    textAlign:"center"
+                }
             }}>
                 <div css={{
                 
@@ -125,6 +140,7 @@ export default function Home() {
                 </div>
 
                 <a css={{
+                        marginTop: "40px",
                         fontWeight: "bold",
                         fontSize: Theme.fontSize.reg,
                         color: Theme.colors.primary,

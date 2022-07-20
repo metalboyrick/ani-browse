@@ -5,19 +5,31 @@ import Theme from "../styles/theme";
 export default function AnimeCardHome(props){
     return (
         <div css={{
-            textAlign:"center",
-            margin: "20px",
+            padding: 0,
+            display:"flex",
+            flexDirection:"column",
+            margin: "20px 10px 10px 10px",
+            minWidth: "120px",
+            maxWidth: "240px",
             "&:hover":{
                 opacity: 0.5
+            },
+            "@media (max-width: 768px)": {
+                width: "120px"
             }
         }}>
+
             <img css={{
-                borderRadius:"10px"
+                borderRadius:"10px",
+                height: "auto",
+                width: "100%",
             }}
             src={props.imgUrl}
             alt="" />
+
+
             <div css={{
-                paddingTop:"10px",
+                paddingTop:"6px",
                 fontSize: Theme.fontSize.reg
             }}>{props.caption}</div>
         </div>
