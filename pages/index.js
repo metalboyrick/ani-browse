@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import Head from "next/head";
-import {ThemeProvider } from "@emotion/react";
 import Theme from "../styles/theme";
+
 
 export default function Home() {
     return (
