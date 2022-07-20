@@ -9,29 +9,34 @@ export default function AnimeCardHome(props){
             display:"flex",
             flexDirection:"column",
             margin: "20px 10px 10px 10px",
-            minWidth: "120px",
-            maxWidth: "240px",
-            maxHeight: "360px",
+            width: "240px",
             "&:hover":{
                 opacity: 0.5
             },
             "@media (max-width: 768px)": {
-                width: "120px"
+                width:"120px"
             }
         }}>
 
             <img css={{
                 borderRadius:"10px",
-                height: "auto",
-                width: "100%",
+                height: "360px",
+                width: "240px",
+                "@media (max-width: 768px)": {
+                    height: "180px",
+                    width: "120px",
+                }
             }}
             src={props.anime.coverImage.large}
             alt="" />
 
 
             <div css={{
-                padding:"20px",
-                fontSize: Theme.fontSize.reg
+                fontSize: Theme.fontSize.reg,
+                padding: "10px",
+                "@media (max-width: 768px)": {
+                    fontSize: "10pt"
+                }
             }}>{props.anime.title.romaji}</div>
         </div>
     );
