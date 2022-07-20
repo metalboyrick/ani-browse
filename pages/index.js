@@ -60,18 +60,18 @@ export default function Home() {
                         textAlign:"center"
                     }
                 }}>
-                    <h1 css={{
+                    <div css={{
+                        fontSize: Theme.fontSize.pageHeader,
+                        lineHeight: "28pt",
                         color: Theme.colors.white,
                         fontWeight: "bold",
-                        lineHeight: "1.5rem",
-                        "@media (max-width: 768px)": {
-                            lineHeight: "2.5rem"
-                        }
-                    }}>Hi, Welcome to AniBrowse!</h1>
-                    <p css={{
-                        fontWeight: 200,
-                        lineHeight: "2rem"
-                    }}>Explore your favourite anime.</p>
+                    }}>Hi, Welcome to AniBrowse!</div>
+
+                    <div css={{
+                        fontSize: Theme.fontSize.reg,
+                        lineHeight: "20pt",
+                        fontWeight: 200
+                    }}>Explore your favourite anime.</div>
 
                     {/* search bar */}
                     <Input css={{
@@ -81,15 +81,16 @@ export default function Home() {
                         }
                     }} placeholder="What are you looking for?"></Input>
 
-                    <p css={{
+                    <div css={{
+                        fontSize: Theme.fontSize.reg,
+                        lineHeight: "20pt",
                         fontWeight: 200,
-                        lineHeight: "2rem"
                     }}>or <a css={{
                         fontWeight: "bold",
                         "&:hover": {
                             color: Theme.colors.primary
                         }
-                    }}>Add to Collections</a></p>
+                    }}>Add to Collections</a></div>
                 </div>
             </div>
 
