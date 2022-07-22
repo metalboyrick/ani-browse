@@ -37,7 +37,7 @@ export default function AnimeDetail({ animeDetail }) {
                     css={{
                         width: "100%",
                         height: "100%",
-                        backgroundImage: `url(${animeDetail.bannerImage})`,
+                        backgroundImage: `url(${animeDetail.bannerImage ? animeDetail.bannerImage : '../placeholder_banner.png'})`,
                         backgroundSize: "cover",
                         opacity: 0.35,
                         position: "absolute"
