@@ -153,6 +153,7 @@ export default function Home({animeList}) {
 
                 </div>
 
+                {/* pagination: load more entries */}
                 {!isSeeMoreLoading ?  <a css={{
                     marginTop: "40px",
                     fontWeight: "bold",
