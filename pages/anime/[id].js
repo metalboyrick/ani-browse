@@ -144,7 +144,7 @@ export default function AnimeDetail({ animeDetail }) {
                     {/* body */}
                     <div>
                         <h1 css={{fontWeight: "bold", color: Theme.colors.white}}>Synopsis</h1>
-                        {animeDetail.description}
+                        <div dangerouslySetInnerHTML={ { __html: animeDetail.description} }></div>
                         <div css={{height: "30px"}}/>
 
                         <h1 css={{fontWeight: "bold", color: Theme.colors.white}}>Characters</h1>
