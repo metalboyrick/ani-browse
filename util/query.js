@@ -68,7 +68,9 @@ const GET_ANIME_DETAILS = gql`
                     node{
                         id
                         name{
-                            full
+                            first 
+                            middle
+                            last
                         }
                         image{
                             medium
