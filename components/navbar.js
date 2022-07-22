@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+import Link from 'next/link';
+
 import Head from "next/head";
 import Theme from "../styles/theme";
 import { Button } from 'antd';
@@ -21,17 +23,22 @@ export default function Navbar() {
                     }
             }}>
                 {/* logo */}
-                <div css={{
-                    color: Theme.colors.white
-                }}>
-                    <span css={{
-                        fontWeight: "100"
-                    }}>Ani</span>
-                    <span css={{
-                        fontWeight: "bold"
-                    }}>Browse</span>
-                </div>
-
+                <Link href={`/`}>
+                    <a css={{
+                        color: Theme.colors.white,
+                        "&:hover": {
+                            color: Theme.colors.primary
+                        }
+                    }}>
+                        <span css={{
+                            fontWeight: "100"
+                        }}>Ani</span>
+                        <span css={{
+                            fontWeight: "bold"
+                        }}>Browse</span>
+                    </a>
+                </Link>
+                
                 {/* collection button */}
                 <Button type="default" shape="round" style={{
                     backgroundColor: Theme.colors.background,
