@@ -36,11 +36,15 @@ export default function CollectionList(){
                 color: Theme.colors.white
                 
                 }}>Your Collections</h1>
-                <Button type="primary">+ Add to Collections</Button>
+                <Button style={{
+                    backgroundColor: Theme.colors.success,
+                    borderColor: Theme.colors.success,
+                    borderRadius: "10px"
+                }} type="primary">+ Add a Collection</Button>
             </div>
             
             {/* the cards */}
-            
+
 
         </div>
     </>);
