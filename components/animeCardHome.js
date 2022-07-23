@@ -48,6 +48,8 @@ export default function AnimeCardHome(props) {
                         padding: "10px"
                     }
                 }}>
+
+                    {/* Rating card */}
                     <div css={{
                         display:"flex",
                         justifyContent: "center",
@@ -67,11 +69,14 @@ export default function AnimeCardHome(props) {
                         </div>
                         
                     </div>
+
+                    {/* Description */}
                     <div>
                         { (isMobile?props.anime.description.substring(0,40):props.anime.description.substring(0,120)) + "..."}
                     </div>
                 </div>
-
+                
+                {/* thumbnail */}
                 <img css={{
                     borderRadius: "10px",
                     height: "360px",
@@ -85,7 +90,7 @@ export default function AnimeCardHome(props) {
                     src={props.anime.coverImage.large}
                     alt="" />
 
-
+                {/* title */}
                 <div css={{
                     fontSize: Theme.fontSize.reg,
                     padding: "10px",
