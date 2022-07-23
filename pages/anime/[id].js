@@ -99,7 +99,7 @@ export default function AnimeDetail({ animeDetail }) {
                         <br />
                         <div>
                             <strong>Studio</strong><br />
-                            {animeDetail.studios.edges[0].node.name}
+                            {animeDetail.studios.edges.length ? animeDetail.studios.edges[0].node.name : "-"}
                         </div>
                         <br />
                         <div>
@@ -136,7 +136,7 @@ export default function AnimeDetail({ animeDetail }) {
                         }}>
                             <StarFilled style={{color: "#F2C94C"}}/> {' '}
                             <span css={{fontSize: "32px", fontWeight: "bold"}}>{animeDetail.averageScore / 10} </span> <span css={{fontSize:"18px"}}> / 10</span> {' '}
-                            | {animeDetail.startDate.year} | {animeDetail.studios.edges[0].node.name}
+                            | {animeDetail.startDate.year} | {animeDetail.studios.edges.length ? animeDetail.studios.edges[0].node.name : "-"}
                         </div>
                         <div css={{height: "30px"}}/>
                     </div>
@@ -155,7 +155,7 @@ export default function AnimeDetail({ animeDetail }) {
                             {animeDetail.characters.edges.map(item => 
                             <PictureCard 
                                 imgUrl={item.node.image.large}
-                                imgWidth = "120px"
+                                imgWidth = "140px"
                                 imgHeight = "180px"
                             >
                                 <strong>{item.node.name.last} {item.node.name.middle} {item.node.name.first}</strong><br/>
