@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import Head from "next/head";
 import { LoadingOutlined } from '@ant-design/icons';
