@@ -151,6 +151,9 @@ export default function AnimeDetail({ animeDetail }) {
                 <div css={{
                     marginLeft: "20px",
                     flex: "6",
+                    "@media (max-width: 768px)" : {
+                        marginLeft: "0"
+                    }
                 }}>
                     {/* DESKTOP title card */}
                     {!isMobile ? <div>
@@ -176,6 +179,7 @@ export default function AnimeDetail({ animeDetail }) {
                     
                     {/* body */}
                     <div>
+                        <div css={{height: "30px"}}/>
                         <h1 css={{fontWeight: "bold", color: Theme.colors.white}}>Synopsis</h1>
                         <div dangerouslySetInnerHTML={ { __html: animeDetail.description} }></div>
                         <div css={{height: "30px"}}/>
