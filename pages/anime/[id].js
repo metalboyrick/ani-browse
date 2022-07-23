@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
+import { useMediaQuery } from 'react-responsive';
 
 import Theme from "../../styles/theme";
 import queries from "../../util/query";
@@ -16,6 +18,7 @@ export default function AnimeDetail({ animeDetail }) {
 
     const router = useRouter();
     const { id } = router.query;        // process elem by id
+    const isMobile = useMediaQuery({query: "(max-width: 768px)"});
 
     return (
         <div>
@@ -31,7 +34,10 @@ export default function AnimeDetail({ animeDetail }) {
             <div css={{
                 width: "100%",
                 height: "40vh",
-                position: "relative"
+                position: "relative",
+                "@media (max-width: 768px)" : {
+                    height: "20vh"
+                }
             }}>
                 <div
                     css={{
@@ -51,19 +57,45 @@ export default function AnimeDetail({ animeDetail }) {
                 position: "relative",
                 top: "-100px",
                 display: "flex",
-                flexWrap: "wrap"
+                flexWrap: "wrap",
+                "@media (max-width: 768px)" : {
+                    marginLeft: "5%",
+                    marginRight: "5%",
+                    flexDirection: "column"
+                }
             }}>
 
                 {/* left column */}
                 <div css={{
                     flex: "1",
-
+                    textAlign: "center"
                 }}>
-                    <img src={animeDetail.coverImage.large} 
+                    <img src={isMobile? animeDetail.coverImage.medium : animeDetail.coverImage.large} 
                     alt={`${animeDetail.title.romaji} cover`} 
                     css={{
                         borderRadius: "10px"
                     }}/>
+
+                    {/* MOBILE title card */}
+                    {isMobile ? <div>
+                        <div css={{
+                            fontSize: "30px",
+                            fontWeight: "bold",
+                            paddingBottom: "5px",
+                            color: Theme.colors.white
+                        }}>
+                            {animeDetail.title.romaji}
+                        </div>
+                        <div css={{
+                            fontSize: "16px",
+                            fontWeight: "200"
+                        }}>
+                            <StarFilled style={{color: "#F2C94C"}}/> {' '}
+                            <span css={{fontSize: "24px", fontWeight: "bold"}}>{animeDetail.averageScore / 10} </span> <span css={{fontSize:"18px"}}> / 10</span> {' '}
+                            | {animeDetail.startDate.year} | {animeDetail.studios.edges.length ? animeDetail.studios.edges[0].node.name : "-"}
+                        </div>
+                    </div>
+                    : ""}
 
                     {/* collection button */}
                     <Button type="primary" shape="round" style={{
@@ -120,8 +152,8 @@ export default function AnimeDetail({ animeDetail }) {
                     marginLeft: "20px",
                     flex: "6",
                 }}>
-                    {/* title card */}
-                    <div>
+                    {/* DESKTOP title card */}
+                    {!isMobile ? <div>
                         <div css={{
                             fontSize: "60px",
                             fontWeight: "bold",
@@ -140,7 +172,8 @@ export default function AnimeDetail({ animeDetail }) {
                         </div>
                         <div css={{height: "30px"}}/>
                     </div>
-
+                    : ""}
+                    
                     {/* body */}
                     <div>
                         <h1 css={{fontWeight: "bold", color: Theme.colors.white}}>Synopsis</h1>
@@ -155,8 +188,8 @@ export default function AnimeDetail({ animeDetail }) {
                             {animeDetail.characters.edges.map(item => 
                             <PictureCard 
                                 imgUrl={item.node.image.large}
-                                imgWidth = "140px"
-                                imgHeight = "180px"
+                                imgWidth = {isMobile ? "130px" : "140px"}
+                                imgHeight = {isMobile ? "195px" : "210px"}
                             >
                                 <strong>{item.node.name.last} {item.node.name.middle} {item.node.name.first}</strong><br/>
                                 {item.voiceActors[0].name.full}
