@@ -227,7 +227,7 @@ export default function CollectionDetails() {
                                                 cursor: "pointer"
                                             }
                                         }}>
-                                            <strong css={{fontSize: "20px"}}>{item.title.romaji}</strong>
+                                            <strong css={{fontSize: "16px"}}>{item.title.romaji}</strong>
                                             <br/>
                                             <span
                                                 css={{

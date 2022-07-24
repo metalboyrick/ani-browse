@@ -31,7 +31,7 @@ export default function PictureCardHorizontal({imgWidth, imgHeight, imgUrl, styl
                 }}  
                 />
                 <div css={{
-                    padding: "16px", 
+                    padding: "12px", 
                     textAlign: "left", 
                     width: "100%", height: "100%"}}>
                     {children}
