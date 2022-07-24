@@ -1,41 +1,44 @@
+// Abstraction to local storage functions
 export default class LocalStorageWorker {
-    constructor(){
+    constructor() {
         if (typeof window !== 'undefined') {
-            if(!localStorage.getItem("aniBrowserData"))
+            if (!localStorage.getItem("aniBrowserData"))
                 localStorage.setItem("aniBrowserData", "{}");
-            if(!localStorage.getItem("aniBrowserPersist"))
+            if (!localStorage.getItem("aniBrowserPersist"))
                 localStorage.setItem("aniBrowserPersist", "");
         }
-        
+
     }
 
-    cleanStr(str){
-        
+    // remove leading/trailing spaces and validate if the string is only alphanum
+    cleanStr(str) {
+
         str = str.trim();
 
         // regex credit : https://stackoverflow.com/questions/13283470/regex-for-allowing-alphanumeric-and-space
-        if(!/^[\w\-\s]+$/.test(str))
+        if (!/^[\w\-\s]+$/.test(str))
             throw "Invalid input!";
 
         return str;
-        
+
     }
 
-    addCollection(name){
+    // create a new collection in localstorage
+    addCollection(name) {
 
         if (typeof window !== 'undefined') {
 
-            try{
+            try {
                 name = this.cleanStr(name);
             } catch (error) {
                 throw error;
             }
-                
+
 
             // get data from local storage
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
-            
-            if(!collectionList[name])
+
+            if (!collectionList[name])
                 collectionList[name] = {
                     dateCreated: new Date(),
                     animes: []
@@ -43,26 +46,26 @@ export default class LocalStorageWorker {
             else {
                 throw "Collection already exists!";
             }
-                
+
             let serialized = JSON.stringify(collectionList);
             localStorage.setItem("aniBrowserData", serialized);
         }
     }
 
-    updateCollection(collectionObj){
+     // update collection object
+    updateCollection(collectionObj) {
         if (typeof window !== 'undefined') {
             let serialized = JSON.stringify(collectionObj);
             localStorage.setItem("aniBrowserData", serialized);
         }
     }
 
-    deleteCollection(name){
-
-        
+    // delete a particular collection
+    deleteCollection(name) {
 
         if (typeof window !== 'undefined') {
 
-            try{
+            try {
                 name = this.cleanStr(name);
             } catch (error) {
                 throw error;
@@ -78,22 +81,23 @@ export default class LocalStorageWorker {
         }
     }
 
-    editCollection(oldName, newName){
+    // rename a particular collection
+    editCollection(oldName, newName) {
 
         if (typeof window !== 'undefined') {
 
-            try{
+            try {
                 oldName = this.cleanStr(oldName);
                 newName = this.cleanStr(newName);
             } catch (error) {
                 throw error;
             }
 
-            if(oldName === newName) return;
+            if (oldName === newName) return;
 
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
 
-            if(collectionList[newName]) throw "Collection names must be unique!";
+            if (collectionList[newName]) throw "Collection names must be unique!";
 
             let collectionObj = collectionList[oldName];
             collectionList[newName] = collectionObj;
@@ -104,25 +108,28 @@ export default class LocalStorageWorker {
             localStorage.setItem("aniBrowserData", serialized);
         }
 
-        
+
     }
 
-    getCollectionList(){
+    // retrieve entire collection object
+    getCollectionList() {
 
         if (typeof window !== 'undefined') {
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
             return collectionList;
         }
-        
+
     }
 
-    getPersistedLink(){
+    // get the route persisted
+    getPersistedLink() {
         if (typeof window !== 'undefined') {
             return localStorage.getItem("aniBrowserPersist");
         }
     }
 
-    setPersistedLink(persistQuery){
+    // save persisted route (THIS IS TO BACK UP DATA LOST BY NEXT ROUTER)
+    setPersistedLink(persistQuery) {
         if (typeof window !== 'undefined') {
             localStorage.setItem("aniBrowserPersist", persistQuery);
         }
