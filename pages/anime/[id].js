@@ -34,7 +34,6 @@ export default function AnimeDetail({ animeDetail }) {
         let tempCol = new Set();
         let collections = storageWorker.getCollectionList();
 
-        console.log(collections);
         
         let collectionNames = Object.keys(collections);
         for(let i = 0; i < collectionNames.length; i++){
@@ -43,7 +42,6 @@ export default function AnimeDetail({ animeDetail }) {
             }
         }
 
-        console.log(tempCol);
 
         setCurrentCollections(tempCol);
     }
@@ -295,7 +293,6 @@ export async function getServerSideProps({ params }) {
     });
 
     // TODO: handle errors
-    console.log(data.Media);
 
     return {
         props: {
