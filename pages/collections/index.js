@@ -170,7 +170,7 @@ export default function CollectionList(){
 
         {isShowDeleteModal ? 
         <DeleteModal
-            title={`Delete Confirmation: "${editName}"`} 
+            title={editName} 
             deleteName={editName}
             closeHandler= {() => {
                 setEditName("");

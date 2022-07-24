@@ -96,6 +96,8 @@ export default function CollectionDetails() {
             throw error;
         }
 
+        setSelectedAnimeTitle("");
+        setSelectedAnimeId(-1);
         setIsShowDeleteModal(false);
     };
 

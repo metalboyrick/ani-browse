@@ -39,7 +39,6 @@ export default function DeleteModal({closeHandler, title, onConfirm, deleteName}
                 type="danger"
                 onClick={() => {
                     onConfirm(deleteName);
-                    closeHandler();
                 }}
             > 
                 Confirm
