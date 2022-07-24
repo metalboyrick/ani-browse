@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import Head from "next/head";
 import { LoadingOutlined } from '@ant-design/icons';
@@ -147,7 +146,7 @@ export default function Home({animeList}) {
 
                 }}>
 
-                    {currentData.map(entry => <AnimeCardHome anime={entry}/>)}
+                    {currentData.map(entry => <AnimeCardHome key={entry.id} anime={entry}/>)}
 
                     
 

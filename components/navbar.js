@@ -23,7 +23,7 @@ export default function Navbar() {
                     }
             }}>
                 {/* logo */}
-                <Link href={`/`}>
+                <Link href="/">
                     <a css={{
                         color: Theme.colors.white,
                         "&:hover": {
@@ -40,13 +40,16 @@ export default function Navbar() {
                 </Link>
                 
                 {/* collection button */}
-                <Button type="default" shape="round" style={{
-                    backgroundColor: Theme.colors.background,
-                    borderColor: Theme.colors.white,
-                    color: Theme.colors.white
-                }}>
-                    Collections
-                </Button>
+                <Link href="/collections">
+                    <Button type="default" shape="round" style={{
+                        backgroundColor: Theme.colors.background,
+                        borderColor: Theme.colors.white,
+                        color: Theme.colors.white
+                    }}>
+                        Collections
+                    </Button>
+                </Link>
+                
             </div>
         </header>
     );

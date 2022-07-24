@@ -19,3 +19,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.ant-modal-footer{
+    background-color: #0D1B2A;
+    border-top: 1px solid #162d46;
+}
+
+.ant-modal-header{
+    background-color: #0D1B2A;
+    border-bottom: 1px solid #162d46;
+}
+
+.ant-modal-title, .ant-modal-close-x{
+    color: white;
+}
+

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Button } from 'antd';
@@ -10,15 +10,46 @@ import { useMediaQuery } from 'react-responsive';
 import Theme from "../../styles/theme";
 import queries from "../../util/query";
 import client from "../../util/apollo-client";
+import LocalStorageWorker from '../../util/localStorageWorker';
 
 import InfoCard from '../../components/infoCard';
 import PictureCard from '../../components/pictureCard';
+import AddToCollectionModal from '../../components/addToCollectionModal';
 
 export default function AnimeDetail({ animeDetail }) {
 
     const router = useRouter();
     const { id } = router.query;        // process elem by id
     const isMobile = useMediaQuery({query: "(max-width: 768px)"});
+    const storageWorker = new LocalStorageWorker();
+
+    // state hooks
+    const [currentCollections, setCurrentCollections] = useState(new Set());
+    const [isAddColVisible, setIsAddColVisible] = useState(false);
+
+    // get collection and check if the id is there
+    const updateCollections = () => {
+        let tempCol = new Set();
+        let collections = storageWorker.getCollectionList();
+
+        console.log(collections);
+        
+        let collectionNames = Object.keys(collections);
+        for(let i = 0; i < collectionNames.length; i++){
+            if(collections[collectionNames[i]].animes.includes(id)){
+                tempCol.add(collectionNames[i]);
+            }
+        }
+
+        console.log(tempCol);
+
+        setCurrentCollections(tempCol);
+    }
+
+    
+    useEffect(() => {
+        updateCollections();
+    }, []);
 
     return (
         <div>
@@ -30,6 +61,19 @@ export default function AnimeDetail({ animeDetail }) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            
+            {isAddColVisible ? 
+                <AddToCollectionModal 
+                    initSelect={currentCollections} 
+                    closeHandler={() => {
+                        updateCollections();
+                        setIsAddColVisible(false);
+                    }} 
+                    animeId={id}
+                /> 
+                : ""
+            }
+            
 
             <div css={{
                 width: "100%",
@@ -105,11 +149,17 @@ export default function AnimeDetail({ animeDetail }) {
                         fontWeight: "bold",
                         width: "100%",
                         marginTop: "14px"
-                    }}>
+                    }}
+                    onClick={() => setIsAddColVisible(true)}
+                    >
                         + Add to Collections
                     </Button>
                     <InfoCard title="Collection"> 
-                        You haven't added this show to any Collections!
+                    {currentCollections.size > 0 ? 
+                        (Array.from(currentCollections)).map(item => <><a href="" css={{"&:hover" : {color: Theme.colors.primary} }} >{item}</a> <br/> </>)
+                    :
+                     "You haven't added this show to any Collections!"}
+                        
                     </InfoCard>
                     <InfoCard title="More Details" css={{
                         textAlign: "center"
