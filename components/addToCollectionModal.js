@@ -114,10 +114,16 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
     // add collection
     // TODO: add error message
     const addCollectionHandler = (collectionName) => {
-        if(collectionName){
-            storageWorker.addCollection(collectionName);
-            updateCollections();
+        try{
+            if(collectionName){
+                storageWorker.addCollection(collectionName);
+                updateCollections();
+            }
         }
+        catch (error){
+            throw error;
+        }
+        
 
         setIsShowAddModal(false);
     };

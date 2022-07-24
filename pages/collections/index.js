@@ -81,21 +81,30 @@ export default function CollectionList(){
 
     // add collection
     const addCollectionHandler = (collectionName) => {
-        if(collectionName){
-            storageWorker.addCollection(collectionName);
-            updateCollections();
+        try{
+            if(collectionName){
+                storageWorker.addCollection(collectionName);
+                updateCollections();
+            }
         }
+        catch (error){
+            throw error;
+        }
+        
 
         setIsShowAddModal(false);
     };
     
     // edit collection
-    // TODO: add error message
     const editCollection = (oldName, newName) => {
-        console.log("new col. name", newName);
-        if(oldName && newName){
-            storageWorker.editCollection(oldName, newName);
-            updateCollections();
+
+        try{
+            if(oldName && newName){
+                storageWorker.editCollection(oldName, newName);
+                updateCollections();
+            }
+        } catch (error) {
+            throw error;
         }
 
         setIsShowEditModal(false);

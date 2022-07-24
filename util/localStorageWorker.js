@@ -48,7 +48,12 @@ export default class LocalStorageWorker {
     editCollection(oldName, newName){
 
         if (typeof window !== 'undefined') {
+            if(oldName === newName) return;
+
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
+
+            if(collectionList[newName]) throw "Collection names must be unique!";
+
             let collectionObj = collectionList[oldName];
             collectionList[newName] = collectionObj;
             delete collectionList[oldName];

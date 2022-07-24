@@ -2,6 +2,7 @@
 
 import { useState, useEffect} from 'react';
 import {Button, Modal, Input} from "antd";
+import {CloseCircleFilled} from "@ant-design/icons";
 
 import Theme from "../styles/theme";
 import queries from "../util/query";
@@ -15,6 +16,7 @@ export default function NameModal({closeHandler, placeholder, title, onConfirm, 
     const storageWorker = new LocalStorageWorker();
 
     const [nameInput, setNameInput] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     const ConfirmButton = () => {
         return (
@@ -27,15 +29,21 @@ export default function NameModal({closeHandler, placeholder, title, onConfirm, 
                 type="primary"
                 onClick={() => {
                     
-                    if(onConfirm){
-                        console.log("add handler called");
-                        onConfirm(nameInput);
-                    } 
-
-                    if(onConfirmEdit && editOldName){
-                        console.log("edit handler called");
-                        onConfirmEdit(editOldName, nameInput);
+                    try{
+                        if(onConfirm){
+                            console.log("add handler called");
+                            onConfirm(nameInput);
+                        } 
+    
+                        if(onConfirmEdit && editOldName){
+                            console.log("edit handler called");
+                            onConfirmEdit(editOldName, nameInput);
+                        }
+                    } catch (error) {
+                        console.log(error);
+                        setErrorMsg(error);
                     }
+                    
                         
                 }}
             > 
@@ -49,10 +57,8 @@ export default function NameModal({closeHandler, placeholder, title, onConfirm, 
             backgroundColor: Theme.colors.background,
             color: Theme.colors.white
         }} title={title} visible={true} onCancel={closeHandler} footer={[<ConfirmButton/>]}>
-            <Input.Group compact>
-                <Input style={{ width: '100%' }} placeholder={placeholder} onChange={e => setNameInput(e.target.value)} />
-            </Input.Group>
-
+            <Input style={{ width: '100%' }} placeholder={placeholder} onChange={e => setNameInput(e.target.value)} /> 
+            {errorMsg.length > 0 ? <div css={{color: Theme.colors.danger, paddingTop: "10px"}}> <CloseCircleFilled/> {errorMsg}</div> : ""}
         </Modal>
     );
 };
