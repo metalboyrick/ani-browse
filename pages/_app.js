@@ -6,11 +6,8 @@ import client from "../util/apollo-client";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-    <ApolloProvider client={client}>
         <Navbar/>
         <Component {...pageProps} />
-    </ApolloProvider>
-        
     </>
   );
 }

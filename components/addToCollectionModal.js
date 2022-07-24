@@ -136,7 +136,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
         <Modal bodyStyle={{
             backgroundColor: Theme.colors.background,
             color: Theme.colors.white
-        }} title="Select Collection(s)" visible={true} onCancel={closeHandler} footer={[<ConfirmButton/>]}>
+        }} title="Select Collection(s)" visible={true} onCancel={closeHandler} footer={[<ConfirmButton key={1}/>]}>
 
             {isShowAddModal ? 
                 <NameModal 

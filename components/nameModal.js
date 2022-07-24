@@ -56,7 +56,7 @@ export default function NameModal({closeHandler, placeholder, title, onConfirm, 
         <Modal bodyStyle={{
             backgroundColor: Theme.colors.background,
             color: Theme.colors.white
-        }} title={title} visible={true} onCancel={closeHandler} footer={[<ConfirmButton/>]}>
+        }} title={title} visible={true} onCancel={closeHandler} footer={[<ConfirmButton key={1}/>]}>
             <Input style={{ width: '100%' }} placeholder={placeholder} onChange={e => setNameInput(e.target.value)} /> 
             {errorMsg.length > 0 ? <div css={{color: Theme.colors.danger, paddingTop: "10px"}}> <CloseCircleFilled/> {errorMsg}</div> : ""}
         </Modal>
