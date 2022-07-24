@@ -11,6 +11,7 @@ export default class LocalStorageWorker {
         
         str = str.trim();
 
+        // regex credit : https://stackoverflow.com/questions/13283470/regex-for-allowing-alphanumeric-and-space
         if(!/^[\w\-\s]+$/.test(str))
             throw "Invalid input!";
 
