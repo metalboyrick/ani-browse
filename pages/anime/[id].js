@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
@@ -156,7 +157,7 @@ export default function AnimeDetail({ animeDetail }) {
                     </Button>
                     <InfoCard title="Collection"> 
                     {currentCollections.size > 0 ? 
-                        (Array.from(currentCollections)).map(item => <><a href={`/collections/${item}`} css={{"&:hover" : {color: Theme.colors.primary} }} >{item}</a> <br/> </>)
+                        (Array.from(currentCollections)).map(item => <><Link href={`/collections/${item}`} css={{"&:hover" : {color: Theme.colors.primary} }} >{item}</Link> <br/> </>)
                     :
                      "You haven't added this show to any Collections!"}
                         
