@@ -124,7 +124,7 @@ export default function CollectionDetails() {
         try{
             if(oldName && newName){
                 storageWorker.editCollection(oldName, newName);
-                
+                storageWorker.setPersistedLink(newName);
                 // reload page with new collection name
                 router.push(`/collections/${newName}`);
             }
