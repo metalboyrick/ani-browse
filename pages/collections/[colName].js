@@ -6,7 +6,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Button} from 'antd';
 import { StarFilled, EditFilled, DeleteFilled, FrownOutlined} from '@ant-design/icons';
-import { useMediaQuery } from 'react-responsive';
 
 import Theme from "../../styles/theme";
 import queries from "../../util/query";
@@ -15,7 +14,7 @@ import LocalStorageWorker from '../../util/localStorageWorker';
 
 import PictureCardHorizontal from '../../components/pictureCardHorizontal';
 import DeleteModal from '../../components/deleteModal';
-import { VariablesInAllowedPositionRule } from 'graphql';
+import NameModal from '../../components/nameModal';
 
 export default function CollectionDetails() {
 
@@ -26,7 +25,6 @@ export default function CollectionDetails() {
     const { colName } = router.query;        // process elem by collection name, feasible since unique
 
     // modal box states
-    const [isShowAddModal, setIsShowAddModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
 
@@ -101,7 +99,20 @@ export default function CollectionDetails() {
         setIsShowDeleteModal(false);
     };
 
-    const editCollection = (oldName, newName) => {};
+    const editCollection = (oldName, newName) => {
+        try{
+            if(oldName && newName){
+                storageWorker.editCollection(oldName, newName);
+                
+                // reload page with new collection name
+                router.push(`/collections/${newName}`);
+            }
+        } catch (error) {
+            throw error;
+        }
+
+        setIsShowEditModal(false);
+    };
 
     useEffect(() => {
         updateAnimes();
@@ -128,6 +139,19 @@ export default function CollectionDetails() {
                     setIsShowDeleteModal(false);
                 }}
                 onConfirm={deleteAnime}
+            /> 
+            : 
+            ""}
+
+            {isShowEditModal ? 
+            <NameModal 
+                title={`Edit Collection "${displayColName}"`} 
+                placeholder= {`Enter a new name for collection "${displayColName}"`} 
+                closeHandler= {() => {
+                    setIsShowEditModal(false);
+                }}
+                editOldName={displayColName}
+                onConfirmEdit={editCollection}
             /> 
             : 
             ""}
@@ -163,7 +187,7 @@ export default function CollectionDetails() {
                         borderColor: Theme.colors.primary,
                         borderRadius: "10px"
                     }} type="primary"
-                    onClick={() => setIsShowAddModal(true)}
+                    onClick={() => setIsShowEditModal(true)}
                     >
                         <EditFilled/> Edit Collection
                     </Button>
