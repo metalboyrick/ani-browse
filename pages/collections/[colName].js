@@ -71,7 +71,7 @@ export default function CollectionDetails() {
 
         setDisplayColName(tempColName);
         let tempCollection = storageWorker.getCollectionList();
-        setColData(tempCollection);
+        setColData(tempCollection[tempColName]);
         
         let animeIDs = tempCollection[tempColName].animes;
         let promiseArr = [];
@@ -102,6 +102,7 @@ export default function CollectionDetails() {
         try{
             if(animeId){
                 let tempColDataAnimes = colData.animes;
+                console.log(animeId, tempColDataAnimes)
                 let colList = storageWorker.getCollectionList();
 
                 tempColDataAnimes = tempColDataAnimes.filter(item => parseInt(item) !== animeId);
