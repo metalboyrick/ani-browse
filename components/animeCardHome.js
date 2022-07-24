@@ -88,7 +88,7 @@ export default function AnimeCardHome(props) {
                         width: "120px",
                     }
                 }}
-                    src={props.anime.coverImage.large}
+                    src={props.anime.coverImage.large ? props.anime.coverImage.large : "../placeholder_cover.png"}
                     alt="" 
                 />
 

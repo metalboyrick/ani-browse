@@ -116,7 +116,7 @@ export default function AnimeDetail({ animeDetail }) {
                     flex: "1",
                     textAlign: "center"
                 }}>
-                    <img src={isMobile? animeDetail.coverImage.medium : animeDetail.coverImage.large} 
+                    <img src={animeDetail.coverImage ? ( isMobile ? animeDetail.coverImage.medium : animeDetail.coverImage.large ) : "../placeholder_cover.png"} 
                     alt={`${animeDetail.title.romaji} cover`} 
                     css={{
                         borderRadius: "10px"
@@ -250,7 +250,7 @@ export default function AnimeDetail({ animeDetail }) {
                             {animeDetail.characters.edges.map((item, index) => 
                             <PictureCard 
                                 key={index}
-                                imgUrl={item.node.image.large}
+                                imgUrl={item.node.image.large ? item.node.image.large : "../placeholder_cover.png"}
                                 imgWidth = {isMobile ? "130px" : "140px"}
                                 imgHeight = {isMobile ? "195px" : "210px"}
                             >
