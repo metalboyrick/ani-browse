@@ -2,7 +2,7 @@
 
 import { useState, useEffect} from 'react';
 import {Button, Modal, Spin} from "antd";
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined , FrownOutlined} from '@ant-design/icons';
 
 import Theme from "../styles/theme";
 import queries from "../util/query";
@@ -164,7 +164,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                 flexWrap:"wrap"
             }}>   
                 {
-                    loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 40 , color: Theme.colors.primary}} spin />} /> : Object.entries(collectionList).map(([name, value]) => {
+                    loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 40 , color: Theme.colors.primary}} spin />} /> : Object.entries(collectionList).length > 0 ? Object.entries(collectionList).map(([name, value]) => {
                         return (
                             <PictureCard 
                                 style={{
@@ -186,7 +186,24 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                                 {name}
                             </PictureCard>
                         );
-                    })
+                    }) : <div css={{
+                        width: "100%",
+                        height: "100%",
+                        display:"flex",
+                        justifyContent:"center",
+                        alignItems:"center"
+                    }}>
+                        <div
+                            css={{
+                                textAlign: "center",
+                                fontSize: "20pt",
+                                color: Theme.colors.gray
+                            }}
+                        >
+                            <FrownOutlined /><br/>
+                            You haven&apos;t added any collections yet!
+                        </div>
+                    </div>
                 }
             </div>
 
