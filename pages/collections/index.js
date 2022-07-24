@@ -2,7 +2,7 @@
 
 import { useState, useEffect} from 'react';
 import Head from "next/head";
-import {Button} from "antd";
+import {Button, Modal} from "antd";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -12,25 +12,25 @@ import client from "../../util/apollo-client";
 import LocalStorageWorker from '../../util/localStorageWorker';
 
 import PictureCard from '../../components/pictureCard';
+import NameModal from '../../components/nameModal';
 
 
 export default function CollectionList(){
 
     const storageWorker = new LocalStorageWorker();
+
+    const [isShowAddModal, setIsShowAddModal] = useState(false);
     const [collectionList, setCollectionList] = useState({});
     const [collectionPics, setCollectionPics] = useState({});
 
-    const addCollection = () => {
-        storageWorker.addCollection("favourite anime");
-    };
-
+    // get relative time with DayJS
     const getRelCreationDate = (creationDate) => {
         dayjs.extend(relativeTime);
         console.log(dayjs(creationDate).fromNow());
         return dayjs(creationDate).fromNow();
     };
 
-    // helper function to fetcch cover images
+    // helper function to fetch cover images
     const fetchImage = async (animeId) => {
         const { loading, error, data } = await client.query({
             query: queries.GET_ANIME_DETAILS,
@@ -46,10 +46,10 @@ export default function CollectionList(){
 
     }
 
-    useEffect(() => {
+    // helper function to update the list
+    const updateCollections = () => {
         let tempColList = storageWorker.getCollectionList();
         setCollectionList(tempColList);
-
 
         // fetch data (cannot server side since LocalStorage is located at client side)
         let picDict = {};
@@ -68,14 +68,31 @@ export default function CollectionList(){
             
         }
 
+        // this section allows us to render everything simultaneously
         Promise.all(promiseArr)
         .then(() => {
             setCollectionPics(picDict);
         })
         
+    };
+
+    // add collection
+    const addCollectionHandler = (collectionName) => {
+        // TODO: add collection logic
+        if(collectionName){
+            storageWorker.addCollection(collectionName);
+            updateCollections();
+        }
+
+        setIsShowAddModal(false);
+    };
+
+
+
+    useEffect(() => {
+        updateCollections();
     }, []);
 
-    
 
     return (<>
         
@@ -87,6 +104,16 @@ export default function CollectionList(){
             />
             <link rel="icon" href="/favicon.ico" />
         </Head>
+
+        {isShowAddModal ? 
+        <NameModal 
+            title="Add a Collection" 
+            placeholder="Enter a name for your new collection..." 
+            closeHandler={() => setIsShowAddModal(false)}
+            onConfirm={addCollectionHandler}
+        /> 
+        : 
+        ""}
 
         <div css={{
             marginLeft: "20%",
@@ -119,6 +146,7 @@ export default function CollectionList(){
                     borderColor: Theme.colors.success,
                     borderRadius: "10px"
                 }} type="primary"
+                onClick={() => setIsShowAddModal(true)}
                 >
                     + Add a Collection
                 </Button>
@@ -143,6 +171,8 @@ export default function CollectionList(){
                                 imgHeight="180px" 
                                 imgUrl={collectionList[key].animes.length > 0 ? collectionPics[key] : "../placeholder_cover.png"}
                             >
+                                <strong>{key}</strong>
+                                <br/>
                                 <span
                                     css={{
                                         color: Theme.colors.gray,
@@ -150,8 +180,9 @@ export default function CollectionList(){
                                     }}
                                 >
                                     {getRelCreationDate(collectionList[key].dateCreated)}
-                                </span><br/>
-                                <strong>{key}</strong>
+                                </span>
+                                <div>
+                                </div>
                             </PictureCard>
                         </>;
                     })
