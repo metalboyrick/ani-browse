@@ -14,7 +14,7 @@ import LocalStorageWorker from '../../util/localStorageWorker';
 
 import PictureCard from '../../components/pictureCard';
 import NameModal from '../../components/nameModal';
-
+import DeleteModal from '../../components/deleteModal';
 
 export default function CollectionList(){
 
@@ -22,6 +22,7 @@ export default function CollectionList(){
 
     const [isShowAddModal, setIsShowAddModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
     const [editName, setEditName] = useState("");
     const [collectionList, setCollectionList] = useState({});
     const [collectionPics, setCollectionPics] = useState({});
@@ -110,6 +111,21 @@ export default function CollectionList(){
         setIsShowEditModal(false);
     };
 
+    // delete collection
+    const deleteCollection = (collectionName) => {
+        try{
+            if(collectionName){
+                storageWorker.deleteCollection(collectionName);
+                updateCollections();
+            }
+        }
+        catch (error){
+            throw error;
+        }
+
+        setIsShowDeleteModal(false);
+    };
+
 
     useEffect(() => {
         updateCollections();
@@ -147,6 +163,19 @@ export default function CollectionList(){
             }}
             editOldName={editName}
             onConfirmEdit={editCollection}
+        /> 
+        : 
+        ""}
+
+        {isShowDeleteModal ? 
+        <DeleteModal
+            title={`Delete Confirmation: "${editName}"`} 
+            deleteName={editName}
+            closeHandler= {() => {
+                setEditName("");
+                setIsShowDeleteModal(false);
+            }}
+            onConfirm={deleteCollection}
         /> 
         : 
         ""}
@@ -241,7 +270,12 @@ export default function CollectionList(){
                                         borderColor: Theme.colors.danger,
                                         borderRadius: "10px",
                                         fontSize: "10pt"
-                                    }}><DeleteFilled color={Theme.colors.white}/></Button>
+                                    }}
+                                        onClick={() => {
+                                            setEditName(key);
+                                            setIsShowDeleteModal(true);
+                                        }}
+                                    ><DeleteFilled color={Theme.colors.white}/></Button>
                                 </div>
                             </PictureCard>
                         </>;
