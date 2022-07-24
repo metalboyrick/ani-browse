@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Button} from 'antd';
-import { StarFilled, EditFilled, DeleteFilled, FrownOutlined} from '@ant-design/icons';
+import { Button, Spin } from 'antd';
+import { StarFilled, EditFilled, DeleteFilled, FrownOutlined, LoadingOutlined} from '@ant-design/icons';
 
 import Theme from "../../styles/theme";
 import queries from "../../util/query";
@@ -28,11 +28,25 @@ export default function CollectionDetails() {
     const [isShowEditModal, setIsShowEditModal] = useState(false);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
 
-    const [displayColName, setDisplayColName] = useState(colName);
+    const [loading, setLoading] = useState(true);
+    const [displayColName, setDisplayColName] = useState("");
     const [colData, setColData] = useState({});
     const [selectedAnimeId, setSelectedAnimeId] = useState(-1);
     const [selectedAnimeTitle, setSelectedAnimeTitle] = useState("");
     const [animeData, setAnimeData] = useState([]);
+
+    // loading widget
+    const LoadingWidget = () => {
+        return (<div css={{
+            width: "100%",
+            height: "100%",
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center"
+        }}>
+             <Spin indicator={<LoadingOutlined style={{ fontSize: 40 , color: Theme.colors.primary}} spin />} />
+        </div>);
+    }
 
     const fetchAnime = async (animeId) => {
         const { loading, error, data } = await client.query({
@@ -48,13 +62,18 @@ export default function CollectionDetails() {
     };
 
     const updateAnimes = () => {
+        setLoading(true);
 
         // update collection contents
         let tempColName = router.query.colName;
-        let tempCollection = storageWorker.getCollectionList()[tempColName];
+        if(!tempColName) tempColName = storageWorker.getPersistedLink();
+        else storageWorker.setPersistedLink(tempColName);
+
+        setDisplayColName(tempColName);
+        let tempCollection = storageWorker.getCollectionList();
         setColData(tempCollection);
         
-        let animeIDs = tempCollection.animes;
+        let animeIDs = tempCollection[tempColName].animes;
         let promiseArr = [];
         let tempAnimeData = [];
 
@@ -65,6 +84,7 @@ export default function CollectionDetails() {
                 fetchAnime(animeIDs[i])
                 .then(data => {
                     tempAnimeData.push(data);  
+                    
                 })
             );
             
@@ -74,6 +94,7 @@ export default function CollectionDetails() {
         Promise.all(promiseArr)
         .then(() => {
             setAnimeData(tempAnimeData);
+            setLoading(false);
         });
     };
 
@@ -199,7 +220,7 @@ export default function CollectionDetails() {
                     flexWrap:"wrap",
                     justifyContent: "space-between"
                 }}>
-                    {
+                    { loading ? <LoadingWidget/> :
                         animeData.length > 0 ? 
                             animeData.map(item => <> 
                                 <PictureCardHorizontal 
@@ -207,7 +228,7 @@ export default function CollectionDetails() {
                                         width: "49%",
                                         margin: "0",
                                         marginBottom: "10px",
-                                        "@media (max-width: 768px)": {
+                                        "@media (max-width: 1400px)": {
                                             width: "100%",
                                         }
                                     }}

@@ -3,8 +3,8 @@
 import { useState, useEffect} from 'react';
 import Head from "next/head";
 import Link from 'next/link';
-import {Button, Modal} from "antd";
-import {EditFilled, DeleteFilled, FrownOutlined} from "@ant-design/icons";
+import {Button, Spin} from "antd";
+import {EditFilled, DeleteFilled, FrownOutlined, LoadingOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -21,6 +21,7 @@ export default function CollectionList(){
 
     const storageWorker = new LocalStorageWorker();
 
+    const [loading, setLoading] = useState(true);
     const [isShowAddModal, setIsShowAddModal] = useState(false);
     const [isShowEditModal, setIsShowEditModal] = useState(false);
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
@@ -50,6 +51,7 @@ export default function CollectionList(){
 
     // helper function to update the list
     const updateCollections = () => {
+        setLoading(true);
         let tempColList = storageWorker.getCollectionList();
         setCollectionList(tempColList);
 
@@ -74,6 +76,7 @@ export default function CollectionList(){
         Promise.all(promiseArr)
         .then(() => {
             setCollectionPics(picDict);
+            setLoading(false);
         })
         
     };
@@ -223,7 +226,7 @@ export default function CollectionList(){
                 justifyContent: "center"
             }}>   
 
-                { Object.keys(collectionList).length > 0 ?
+                { loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 40 , color: Theme.colors.primary}} spin />} /> : Object.keys(collectionList).length > 0 ?
                     Object.keys(collectionList).map((key, index) => {
                         return <>
                         

@@ -2,7 +2,9 @@ export default class LocalStorageWorker {
     constructor(){
         if (typeof window !== 'undefined') {
             if(!localStorage.getItem("aniBrowserData"))
-            localStorage.setItem("aniBrowserData", "{}");
+                localStorage.setItem("aniBrowserData", "{}");
+            if(!localStorage.getItem("aniBrowserPersist"))
+                localStorage.setItem("aniBrowserPersist", "");
         }
         
     }
@@ -112,5 +114,17 @@ export default class LocalStorageWorker {
             return collectionList;
         }
         
+    }
+
+    getPersistedLink(){
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem("aniBrowserPersist");
+        }
+    }
+
+    setPersistedLink(persistQuery){
+        if (typeof window !== 'undefined') {
+            localStorage.setItem("aniBrowserPersist", persistQuery);
+        }
     }
 };
