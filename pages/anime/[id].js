@@ -36,7 +36,7 @@ export default function AnimeDetail({ animeDetail }) {
         
         let collectionNames = Object.keys(collections);
         for(let i = 0; i < collectionNames.length; i++){
-            if(collections[collectionNames[i]].includes(id)){
+            if(collections[collectionNames[i]].animes.includes(id)){
                 tempCol.add(collectionNames[i]);
             }
         }

@@ -3,6 +3,8 @@
 import { useState, useEffect} from 'react';
 import Head from "next/head";
 import {Button} from "antd";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import Theme from "../../styles/theme";
 import PictureCard from '../../components/pictureCard';
@@ -10,17 +12,26 @@ import LocalStorageWorker from '../../util/localStorageWorker';
 
 export default function CollectionList(){
 
+    const storageWorker = new LocalStorageWorker();
     const [collectionList, setCollectionList] = useState([]);
 
-    useEffect(() => {
-        let worker = new LocalStorageWorker();
-        setCollectionList(worker.getCollectionList());
-    });
-
     const addCollection = () => {
-        let worker = new LocalStorageWorker();
-        worker.addCollection("favourite anime");
-    }
+        storageWorker.addCollection("favourite anime");
+    };
+
+    const getRelCreationDate = (creationDate) => {
+        dayjs.extend(relativeTime);
+        return dayjs(creationDate).fromNow();
+    };
+
+    useEffect(() => {
+        setCollectionList(storageWorker.getCollectionList());
+
+        // fetch data (cannot server side since LocalStorage is located at client side)
+
+    }, []);
+
+    
 
     return (<>
         
@@ -54,7 +65,13 @@ export default function CollectionList(){
                     backgroundColor: Theme.colors.success,
                     borderColor: Theme.colors.success,
                     borderRadius: "10px"
-                }} type="primary">+ Add a Collection</Button>
+                }} type="primary"
+                onClick={() => {
+                    // add collection logic
+                }}
+                >
+                    + Add a Collection
+                </Button>
             </div>
             
             {/* the cards */}
@@ -65,7 +82,18 @@ export default function CollectionList(){
                 {
                     Object.keys(collectionList).map(function(key, index) {
                         return <>
-                            <PictureCard imgWidth="120px" imgHeight="180px" imgUrl={collectionList[key].length > 0 ? "" : "../placeholder_cover.png"}>test</PictureCard>
+                            <PictureCard 
+                                css={{
+                                    textAlign: "center"
+                                }}
+                                key={key}
+                                imgWidth="120px" 
+                                imgHeight="180px" 
+                                imgUrl={collectionList[key].animes.length > 0 ? "" : "../placeholder_cover.png"}
+                            >
+                                {getRelCreationDate(collectionList[key].dateCreated)}<br/>
+                                <strong>{key}</strong>
+                            </PictureCard>
                         </>;
                     })
                 }

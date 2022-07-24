@@ -13,7 +13,10 @@ export default class LocalStorageWorker {
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
             
             if(!collectionList[name])
-                collectionList[name] = [];
+                collectionList[name] = {
+                    dateCreated: new Date(),
+                    animes: []
+                };
             else {
                 throw "Collection already exists!";
             }

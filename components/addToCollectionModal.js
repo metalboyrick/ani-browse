@@ -47,8 +47,8 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                     
                     // add checked keys
                     selectedCol.forEach(item => {
-                        if(!temp[item].includes(animeId))
-                            temp[item] = [...temp[item], animeId];
+                        if(!temp[item].animes.includes(animeId))
+                            temp[item].animes = [...temp[item].animes, animeId];
                     });
 
                     // serialize into local storage
