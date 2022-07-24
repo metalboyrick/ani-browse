@@ -7,8 +7,29 @@ export default class LocalStorageWorker {
         
     }
 
+    cleanStr(str){
+        
+        str = str.trim();
+
+        // regex credit : https://stackoverflow.com/questions/13283470/regex-for-allowing-alphanumeric-and-space
+        if(!/^[\w\-\s]+$/.test(str))
+            throw "Invalid input!";
+
+        return str;
+        
+    }
+
     addCollection(name){
+
         if (typeof window !== 'undefined') {
+
+            try{
+                name = this.cleanStr(name);
+            } catch (error) {
+                throw error;
+            }
+                
+
             // get data from local storage
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
             
@@ -34,7 +55,17 @@ export default class LocalStorageWorker {
     }
 
     deleteCollection(name){
+
+        
+
         if (typeof window !== 'undefined') {
+
+            try{
+                name = this.cleanStr(name);
+            } catch (error) {
+                throw error;
+            }
+
             // parse and delete
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
             delete collectionList[name];
@@ -48,7 +79,20 @@ export default class LocalStorageWorker {
     editCollection(oldName, newName){
 
         if (typeof window !== 'undefined') {
+
+            try{
+                oldName = this.cleanStr(oldName);
+                newName = this.cleanStr(newName);
+            } catch (error) {
+                throw error;
+            }
+
+            if(oldName === newName) return;
+
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
+
+            if(collectionList[newName]) throw "Collection names must be unique!";
+
             let collectionObj = collectionList[oldName];
             collectionList[newName] = collectionObj;
             delete collectionList[oldName];
