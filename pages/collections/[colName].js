@@ -15,7 +15,7 @@ import LocalStorageWorker from '../../util/localStorageWorker';
 import PictureCard from '../../components/pictureCard';
 import DeleteModal from '../../components/deleteModal';
 
-export default function CollectionDetails({ collectionDetail }) {
+export default function CollectionDetails() {
 
     const router = useRouter();
     const { colName } = router.query;        // process elem by id
