@@ -7,11 +7,27 @@ export default class LocalStorageWorker {
         
     }
 
+    cleanStr(str){
+        
+        str = str.trim();
+
+        if(!/^[\w\-\s]+$/.test(str))
+            throw "Invalid input!";
+
+        return str;
+        
+    }
+
     addCollection(name){
 
         if (typeof window !== 'undefined') {
 
-            name = name.trim();
+            try{
+                name = this.cleanStr(name);
+            } catch (error) {
+                throw error;
+            }
+                
 
             // get data from local storage
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
@@ -43,7 +59,11 @@ export default class LocalStorageWorker {
 
         if (typeof window !== 'undefined') {
 
-            name = name.trim();
+            try{
+                name = this.cleanStr(name);
+            } catch (error) {
+                throw error;
+            }
 
             // parse and delete
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
@@ -59,8 +79,12 @@ export default class LocalStorageWorker {
 
         if (typeof window !== 'undefined') {
 
-            oldName = oldName.trim();
-            newName = newName.trim();
+            try{
+                oldName = this.cleanStr(oldName);
+                newName = this.cleanStr(newName);
+            } catch (error) {
+                throw error;
+            }
 
             if(oldName === newName) return;
 
