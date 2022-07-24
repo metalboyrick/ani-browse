@@ -77,8 +77,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
             
             {/* The collection */}
             {/* the cards */}
-
-            {/* TODO: FIX THE NONLIVE UPDATE */}
             <div css={{
                 display:"flex",
                 flexWrap:"wrap"
