@@ -6,9 +6,9 @@ body {
   padding: 0;
   margin: 0;
   font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: #0D1B2A;
-    color: white;
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+    background-color: #0D1B2A !important;
+    color: white !important;
 }
 
 a {
@@ -21,16 +21,16 @@ a {
 }
 
 .ant-modal-footer{
-    background-color: #0D1B2A;
-    border-top: 1px solid #162d46;
+    background-color: #0D1B2A !important;
+    border-top: 1px solid #162d46 !important;
 }
 
 .ant-modal-header{
-    background-color: #0D1B2A;
-    border-bottom: 1px solid #162d46;
+    background-color: #0D1B2A !important;
+    border-bottom: 1px solid #162d46 !important;
 }
 
 .ant-modal-title, .ant-modal-close-x{
-    color: white;
+    color: white !important;
 }
 

@@ -75,7 +75,7 @@ export default function Home({animeList}) {
                     css={{
                         width: "100%",
                         height: "100%",
-                        backgroundImage: `url(${banners[0]})`,
+                        backgroundImage: `url(${banners[1]})`,
                         backgroundSize: "cover",
                         opacity: 0.35,
                         position: "absolute"
@@ -111,17 +111,6 @@ export default function Home({animeList}) {
                         lineHeight: "20pt",
                         fontWeight: 200
                     }}>Explore your favourite anime.</div>
-
-                    <div css={{
-                        fontSize: Theme.fontSize.reg,
-                        lineHeight: "20pt",
-                        fontWeight: 200,
-                    }}>and <a css={{
-                        fontWeight: "bold",
-                        "&:hover": {
-                            color: Theme.colors.primary
-                        }
-                    }}>Add to Collections</a></div>
                 </div>
             </div>
 

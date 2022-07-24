@@ -1,3 +1,5 @@
+
+// GQL queries
 import { gql } from "@apollo/client";
 
 const GET_PAGINATED_ANIME_LIST = gql`

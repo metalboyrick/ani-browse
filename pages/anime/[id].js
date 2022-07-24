@@ -34,7 +34,6 @@ export default function AnimeDetail({ animeDetail }) {
         let tempCol = new Set();
         let collections = storageWorker.getCollectionList();
 
-        console.log(collections);
         
         let collectionNames = Object.keys(collections);
         for(let i = 0; i < collectionNames.length; i++){
@@ -43,7 +42,6 @@ export default function AnimeDetail({ animeDetail }) {
             }
         }
 
-        console.log(tempCol);
 
         setCurrentCollections(tempCol);
     }
@@ -116,7 +114,7 @@ export default function AnimeDetail({ animeDetail }) {
                     flex: "1",
                     textAlign: "center"
                 }}>
-                    <img src={isMobile? animeDetail.coverImage.medium : animeDetail.coverImage.large} 
+                    <img src={animeDetail.coverImage ? ( isMobile ? animeDetail.coverImage.medium : animeDetail.coverImage.large ) : "../placeholder_cover.png"} 
                     alt={`${animeDetail.title.romaji} cover`} 
                     css={{
                         borderRadius: "10px"
@@ -250,7 +248,7 @@ export default function AnimeDetail({ animeDetail }) {
                             {animeDetail.characters.edges.map((item, index) => 
                             <PictureCard 
                                 key={index}
-                                imgUrl={item.node.image.large}
+                                imgUrl={item.node.image.large ? item.node.image.large : "../placeholder_cover.png"}
                                 imgWidth = {isMobile ? "130px" : "140px"}
                                 imgHeight = {isMobile ? "195px" : "210px"}
                             >
@@ -295,7 +293,6 @@ export async function getServerSideProps({ params }) {
     });
 
     // TODO: handle errors
-    console.log(data.Media);
 
     return {
         props: {

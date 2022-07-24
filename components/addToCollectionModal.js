@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { useState, useEffect} from 'react';
-import {Button, Modal} from "antd";
+import {Button, Modal, Spin} from "antd";
+import { LoadingOutlined , FrownOutlined} from '@ant-design/icons';
 
 import Theme from "../styles/theme";
 import queries from "../util/query";
@@ -15,6 +16,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
     
     const storageWorker = new LocalStorageWorker();
 
+    const [loading, setLoading] = useState(true);
     const [isShowAddModal, setIsShowAddModal] = useState(false);
     const [selectedCol, setSelectedCol] = useState(initSelect);
     const [collectionList, setCollectionList] = useState(storageWorker.getCollectionList());
@@ -29,8 +31,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
         } else {
             temp.add(name);
         }
-
-        console.log(temp);
 
         setSelectedCol(temp);
     }
@@ -75,7 +75,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
         });
     
         // TODO: handle errors
-        console.log(data.Media.coverImage.large);
 
         return data.Media.coverImage.large;
 
@@ -83,6 +82,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
 
     // helper function to update the list
     const updateCollections = () => {
+        setLoading(true);
         let tempColList = storageWorker.getCollectionList();
         setCollectionList(tempColList);
 
@@ -107,6 +107,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
         Promise.all(promiseArr)
         .then(() => {
             setCollectionPics(picDict);
+            setLoading(false);
         })
         
     };
@@ -136,7 +137,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
         <Modal bodyStyle={{
             backgroundColor: Theme.colors.background,
             color: Theme.colors.white
-        }} title="Select Collection(s)" visible={true} onCancel={closeHandler} footer={[<ConfirmButton/>]}>
+        }} title="Select Collection(s)" visible={true} onCancel={closeHandler} footer={[<ConfirmButton key={1}/>]}>
 
             {isShowAddModal ? 
                 <NameModal 
@@ -163,7 +164,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                 flexWrap:"wrap"
             }}>   
                 {
-                    Object.entries(collectionList).map(([name, value]) => {
+                    loading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 40 , color: Theme.colors.primary}} spin />} /> : Object.entries(collectionList).length > 0 ? Object.entries(collectionList).map(([name, value]) => {
                         return (
                             <PictureCard 
                                 style={{
@@ -185,7 +186,24 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                                 {name}
                             </PictureCard>
                         );
-                    })
+                    }) : <div css={{
+                        width: "100%",
+                        height: "100%",
+                        display:"flex",
+                        justifyContent:"center",
+                        alignItems:"center"
+                    }}>
+                        <div
+                            css={{
+                                textAlign: "center",
+                                fontSize: "20pt",
+                                color: Theme.colors.gray
+                            }}
+                        >
+                            <FrownOutlined /><br/>
+                            You haven&apos;t added any collections yet!
+                        </div>
+                    </div>
                 }
             </div>
 

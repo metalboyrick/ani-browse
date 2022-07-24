@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   swcMinify: true,
   images: {
     domains: [
-        'graphql.anilist.co',
         's4.anilist.co'
     ]
   }
