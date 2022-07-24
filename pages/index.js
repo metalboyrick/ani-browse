@@ -146,7 +146,7 @@ export default function Home({animeList}) {
 
                 }}>
 
-                    {currentData.map(entry => <AnimeCardHome anime={entry}/>)}
+                    {currentData.map(entry => <AnimeCardHome key={entry.id} anime={entry}/>)}
 
                     
 

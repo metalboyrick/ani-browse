@@ -23,7 +23,7 @@ export default function Navbar() {
                     }
             }}>
                 {/* logo */}
-                <Link href={`/`}>
+                <Link href="/">
                     <a css={{
                         color: Theme.colors.white,
                         "&:hover": {

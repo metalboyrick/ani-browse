@@ -6,8 +6,22 @@ import {Button} from "antd";
 
 import Theme from "../../styles/theme";
 import PictureCard from '../../components/pictureCard';
+import LocalStorageWorker from '../../util/localStorageWorker';
 
 export default function CollectionList(){
+
+    const [collectionList, setCollectionList] = useState([]);
+
+    useEffect(() => {
+        let worker = new LocalStorageWorker();
+        setCollectionList(worker.getCollectionList());
+    });
+
+    const addCollection = () => {
+        let worker = new LocalStorageWorker();
+        worker.addCollection("favourite anime");
+    }
+
     return (<>
         
         <Head>
@@ -44,7 +58,19 @@ export default function CollectionList(){
             </div>
             
             {/* the cards */}
-
+            <div css={{
+                display:"flex",
+                flexWrap:"wrap"
+            }}>   
+                {
+                    Object.keys(collectionList).map(function(key, index) {
+                        return <>
+                            <PictureCard imgWidth="120px" imgHeight="180px" imgUrl={collectionList[key].length > 0 ? "" : "../placeholder_cover.png"}>test</PictureCard>
+                        </>;
+                    })
+                }
+            </div>
+            
 
         </div>
     </>);
