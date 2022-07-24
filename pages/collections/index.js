@@ -2,6 +2,7 @@
 
 import { useState, useEffect} from 'react';
 import Head from "next/head";
+import Link from 'next/link';
 import {Button, Modal} from "antd";
 import {EditFilled, DeleteFilled, FrownOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -228,6 +229,7 @@ export default function CollectionList(){
                 { Object.keys(collectionList).length > 0 ?
                     Object.keys(collectionList).map((key, index) => {
                         return <>
+                        
                             <PictureCard 
                                 css={{
                                     textAlign: "center"
@@ -237,16 +239,21 @@ export default function CollectionList(){
                                 imgHeight="210px" 
                                 imgUrl={collectionList[key].animes.length > 0 ? collectionPics[key] : "../placeholder_cover.png"}
                             >
-                                <strong>{key}</strong>
-                                <br/>
-                                <span
-                                    css={{
-                                        color: Theme.colors.gray,
-                                        fontSize: "0.75rem"
-                                    }}
-                                >
-                                    {getRelCreationDate(collectionList[key].dateCreated)}
-                                </span>
+                                <Link href={`/collections/${key}`}>
+                                    <div>
+                                        <strong>{key}</strong>
+                                        <br/>
+                                        <span
+                                            css={{
+                                                color: Theme.colors.gray,
+                                                fontSize: "0.75rem"
+                                            }}
+                                        >
+                                            {getRelCreationDate(collectionList[key].dateCreated)}
+                                        </span>
+                                    </div>
+                                    
+                                </Link>
                                 <div css={{
                                     display:"flex",
                                     justifyContent: "space-between",
