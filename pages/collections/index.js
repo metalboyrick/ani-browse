@@ -237,7 +237,7 @@ export default function CollectionList(){
                                 key={key}
                                 imgWidth="140px" 
                                 imgHeight="210px" 
-                                imgUrl={collectionList[key].animes.length > 0 ? collectionPics[key] : "../placeholder_cover.png"}
+                                imgUrl={collectionPics[key] ? collectionPics[key] : "../placeholder_cover.png"}
                             >
                                 <Link href={`/collections/${key}`}>
                                     <div>

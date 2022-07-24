@@ -194,7 +194,7 @@ export default function CollectionDetails() {
                                     key={item.id}
                                     imgWidth="95px" 
                                     imgHeight="143px" 
-                                    imgUrl={item.coverImage.large}
+                                    imgUrl={item.coverImage.medium ? item.coverImage.medium : "../placeholder_cover.png"}
                                 >
                                     <Link 
                                         href={`/anime/${item.id}`}
