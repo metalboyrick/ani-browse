@@ -155,9 +155,14 @@ export default function AnimeDetail({ animeDetail }) {
                     >
                         + Add to Collections
                     </Button>
-                    <InfoCard title="Collection"> 
+                    <InfoCard title="Collections"> 
                     {currentCollections.size > 0 ? 
-                        (Array.from(currentCollections)).map(item => <><Link href={`/collections/${item}`} css={{"&:hover" : {color: Theme.colors.primary} }} >{item}</Link> <br/> </>)
+                        (Array.from(currentCollections)).map(item => <>
+                        <Link href={`/collections/${item}`} >
+                            <span css={{"&:hover":{color:Theme.colors.primary, cursor:"pointer"}}}>{item}</span>
+                        </Link> 
+                        <br/> 
+                        </>)
                     :
                      "You haven't added this show to any Collections!"}
                         
