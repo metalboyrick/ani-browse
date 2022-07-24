@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+import Image from 'next/image';
+
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import Theme from "../styles/theme";
@@ -36,7 +38,7 @@ export default function PictureCard({imgWidth, imgHeight, imgUrl, initSelected, 
             <div css={{
                 opacity: isSelected ? 0.35 : 1.0
             }}>
-                <img src={imgUrl} alt="picture card" css={{
+                <Image src={imgUrl} alt="picture card" css={{
                     borderRadius: "10px 10px 0 0 ",
                     width: imgWidth ? imgWidth : "auto",
                     height: imgHeight ? imgHeight : "auto",

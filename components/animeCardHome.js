@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 import {useState} from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -77,7 +78,7 @@ export default function AnimeCardHome(props) {
                 </div>
                 
                 {/* thumbnail */}
-                <img css={{
+                <Image css={{
                     borderRadius: "10px",
                     height: "360px",
                     width: "240px",
