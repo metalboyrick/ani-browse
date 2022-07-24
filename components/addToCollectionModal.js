@@ -30,8 +30,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
             temp.add(name);
         }
 
-        console.log(temp);
-
         setSelectedCol(temp);
     }
 
@@ -75,7 +73,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
         });
     
         // TODO: handle errors
-        console.log(data.Media.coverImage.large);
 
         return data.Media.coverImage.large;
 

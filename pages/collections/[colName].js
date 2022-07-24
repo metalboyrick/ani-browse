@@ -43,7 +43,6 @@ export default function CollectionDetails() {
         });
     
         // TODO: handle errors
-        console.log(data.Media);
 
         return data.Media;
     };

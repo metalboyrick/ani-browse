@@ -31,16 +31,13 @@ export default function NameModal({closeHandler, placeholder, title, onConfirm, 
                     
                     try{
                         if(onConfirm){
-                            console.log("add handler called");
                             onConfirm(nameInput);
                         } 
     
                         if(onConfirmEdit && editOldName){
-                            console.log("edit handler called");
                             onConfirmEdit(editOldName, nameInput);
                         }
                     } catch (error) {
-                        console.log(error);
                         setErrorMsg(error);
                     }
                     

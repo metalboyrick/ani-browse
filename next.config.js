@@ -2,7 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: false,
   images: {
     domains: [
         's4.anilist.co'

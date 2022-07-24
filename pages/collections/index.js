@@ -31,7 +31,6 @@ export default function CollectionList(){
     // get relative time with DayJS
     const getRelCreationDate = (creationDate) => {
         dayjs.extend(relativeTime);
-        console.log(dayjs(creationDate).fromNow());
         return dayjs(creationDate).fromNow();
     };
 
@@ -44,8 +43,6 @@ export default function CollectionList(){
             }
         });
     
-        // TODO: handle errors
-        console.log(data.Media.coverImage.large);
 
         return data.Media.coverImage.large;
 
@@ -240,7 +237,7 @@ export default function CollectionList(){
                                 imgUrl={collectionPics[key] ? collectionPics[key] : "../placeholder_cover.png"}
                             >
                                 <Link href={`/collections/${key}`}>
-                                    <div>
+                                    <div css={{"&:hover":{cursor: "pointer"}}}>
                                         <strong>{key}</strong>
                                         <br/>
                                         <span
