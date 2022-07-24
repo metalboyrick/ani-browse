@@ -13,7 +13,7 @@ import queries from "../../util/query";
 import client from "../../util/apollo-client";
 import LocalStorageWorker from '../../util/localStorageWorker';
 
-import PictureCard from '../../components/pictureCard';
+import PictureCardHorizontal from '../../components/pictureCardHorizontal';
 import DeleteModal from '../../components/deleteModal';
 import { VariablesInAllowedPositionRule } from 'graphql';
 
@@ -25,9 +25,15 @@ export default function CollectionDetails() {
     // NOTE : if collection name is changed, for the current session the link name will remain, will change next session
     const { colName } = router.query;        // process elem by collection name, feasible since unique
 
+    // modal box states
+    const [isShowAddModal, setIsShowAddModal] = useState(false);
+    const [isShowEditModal, setIsShowEditModal] = useState(false);
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+
     const [displayColName, setDisplayColName] = useState(colName);
     const [colData, setColData] = useState({});
     const [selectedAnimeId, setSelectedAnimeId] = useState(-1);
+    const [selectedAnimeTitle, setSelectedAnimeTitle] = useState("");
     const [animeData, setAnimeData] = useState([]);
 
     const fetchAnime = async (animeId) => {
@@ -49,7 +55,6 @@ export default function CollectionDetails() {
         // update collection contents
         let tempColName = router.query.colName;
         let tempCollection = storageWorker.getCollectionList()[tempColName];
-        console.log("collectionName", router.query);
         setColData(tempCollection);
         
         let animeIDs = tempCollection.animes;
@@ -75,7 +80,24 @@ export default function CollectionDetails() {
         });
     };
 
-    const deleteAnime = (animeId) => {};
+    const deleteAnime = (animeId) => {
+        try{
+            if(animeId){
+                let tempColDataAnimes = colData.animes;
+                let colList = storageWorker.getCollectionList();
+
+                tempColDataAnimes = tempColDataAnimes.filter(item => parseInt(item) !== animeId);
+                colList[displayColName].animes = tempColDataAnimes;
+                storageWorker.updateCollection(colList);
+                updateAnimes();
+            }
+        }
+        catch (error){
+            throw error;
+        }
+
+        setIsShowDeleteModal(false);
+    };
 
     const editCollection = (oldName, newName) => {};
 
@@ -93,6 +115,21 @@ export default function CollectionDetails() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
+            {isShowDeleteModal ? 
+            <DeleteModal
+                title={selectedAnimeTitle}
+                deleteName={selectedAnimeId}
+                closeHandler= {() => {
+                    setSelectedAnimeTitle("");
+                    setSelectedAnimeId(-1);
+                    setIsShowDeleteModal(false);
+                }}
+                onConfirm={deleteAnime}
+            /> 
+            : 
+            ""}
+
             <div css={{
                 marginLeft: "20%",
                 marginRight: "20%",
@@ -135,23 +172,37 @@ export default function CollectionDetails() {
                 <div css={{
                     display:"flex",
                     flexWrap:"wrap",
-                    justifyContent: "center"
+                    justifyContent: "space-between"
                 }}>
                     {
                         animeData.length > 0 ? 
                             animeData.map(item => <> 
-                                <PictureCard 
-                                    css={{
-                                        textAlign: "center"
+                                <PictureCardHorizontal 
+                                    style={{
+                                        width: "49%",
+                                        margin: "0",
+                                        marginBottom: "10px",
+                                        "@media (max-width: 768px)": {
+                                            width: "100%",
+                                        }
                                     }}
+                                    // css={{
+                                    //     textAlign: "center"
+                                    // }}
                                     key={item.id}
-                                    imgWidth="140px" 
-                                    imgHeight="210px" 
+                                    imgWidth="95px" 
+                                    imgHeight="143px" 
                                     imgUrl={item.coverImage.large}
                                 >
-                                    <Link href={`/anime/${item.id}`}>
-                                        <div>
-                                            <strong>{item.title.romaji}</strong>
+                                    <Link 
+                                        href={`/anime/${item.id}`}
+                                    >
+                                        <div css={{
+                                            "&:hover":{
+                                                cursor: "pointer"
+                                            }
+                                        }}>
+                                            <strong css={{fontSize: "20px"}}>{item.title.romaji}</strong>
                                             <br/>
                                             <span
                                                 css={{
@@ -168,22 +219,11 @@ export default function CollectionDetails() {
                                     </Link>
                                     <div css={{
                                         display:"flex",
-                                        justifyContent: "space-between",
+                                        justifyContent: "end",
                                         width: "100%",
-                                        textAlign: "center",
+                                        textAlign: "left",
                                         marginTop: "10px"
                                     }}>
-                                        <Button type="primary" style={{
-                                            backgroundColor: Theme.colors.primary,
-                                            borderColor: Theme.colors.primary,
-                                            borderRadius: "10px",
-                                            fontSize: "10pt"
-                                        }}
-                                            onClick={() => {
-                                                setEditName(key);
-                                                setIsShowEditModal(true);
-                                            }}
-                                        ><EditFilled color={Theme.colors.white}/></Button>
                                         <Button type="danger" style={{
                                             backgroundColor: Theme.colors.danger,
                                             borderColor: Theme.colors.danger,
@@ -191,15 +231,22 @@ export default function CollectionDetails() {
                                             fontSize: "10pt"
                                         }}
                                             onClick={() => {
-                                                setEditName(key);
+                                                setSelectedAnimeId(item.id);
+                                                setSelectedAnimeTitle(item.title.romaji);
                                                 setIsShowDeleteModal(true);
                                             }}
                                         ><DeleteFilled color={Theme.colors.white}/></Button>
                                     </div>
-                                </PictureCard>
+                                </PictureCardHorizontal>
                             </>)
                         :
-                        <>
+                        <div css={{
+                            width: "100%",
+                            height: "100%",
+                            display:"flex",
+                            justifyContent:"center",
+                            alignItems:"center"
+                        }}>
                             <div
                                 css={{
                                     textAlign: "center",
@@ -208,9 +255,9 @@ export default function CollectionDetails() {
                                 }}
                             >
                                 <FrownOutlined /><br/>
-                                You haven't added any collections yet!
+                                You haven't added any anime to this collection yet!
                             </div>
-                        </>
+                        </div>
                         
                     }
                 </div>

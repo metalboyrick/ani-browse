@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import {useState} from 'react';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 
 import { StarFilled } from '@ant-design/icons';
 
