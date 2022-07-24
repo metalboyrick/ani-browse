@@ -156,7 +156,7 @@ export default function AnimeDetail({ animeDetail }) {
                     </Button>
                     <InfoCard title="Collection"> 
                     {currentCollections.size > 0 ? 
-                        (Array.from(currentCollections)).map(item => <><a href="">{item}</a> <br/> </>)
+                        (Array.from(currentCollections)).map(item => <><a href="" css={{"&:hover" : {color: Theme.colors.primary} }} >{item}</a> <br/> </>)
                     :
                      "You haven't added this show to any Collections!"}
                         

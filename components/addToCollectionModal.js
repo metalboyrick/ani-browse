@@ -45,9 +45,10 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                 onClick={() => {
                     let temp = collectionList;
                     
-                    // append current animeId to selected keys
+                    // add checked keys
                     selectedCol.forEach(item => {
-                        temp[item] = [...temp[item], animeId];
+                        if(!temp[item].includes(animeId))
+                            temp[item] = [...temp[item], animeId];
                     });
 
                     // serialize into local storage
@@ -78,7 +79,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
             {/* the cards */}
 
             {/* TODO: FIX THE NONLIVE UPDATE */}
-            {/* TODO: FIX DUPLICATE UPDATES */}
             <div css={{
                 display:"flex",
                 flexWrap:"wrap"
@@ -88,6 +88,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                         return (
                             <PictureCard 
                                 style={{
+                                    display: initSelect.has(name) ? "none" : "",
                                     '&:hover': {
                                         cursor: "pointer"
                                     }
@@ -96,7 +97,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                                 imgWidth="120px" 
                                 imgHeight="180px" 
                                 imgUrl={value.length > 0 ? "" : "../placeholder_cover.png"}
-                                cardSelected={ selectedCol.has(name) } 
+                                initSelected={ selectedCol.has(name) } 
                                 onClick={() => {
                                    selectItem(name);
                                 }}

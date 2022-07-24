@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import { CheckCircleOutlined } from "@ant-design/icons";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Theme from "../styles/theme";
 
-export default function PictureCard({imgWidth, imgHeight, imgUrl, cardSelected, style, children, onClick}) {
+export default function PictureCard({imgWidth, imgHeight, imgUrl, initSelected, style, children, onClick}) {
+
+    const [isSelected, setIsSelected] = useState(initSelected);
 
     return (
         <div css={{
@@ -13,7 +15,10 @@ export default function PictureCard({imgWidth, imgHeight, imgUrl, cardSelected, 
             margin: "10px",
             width: imgWidth ? imgWidth : "auto",
             ...style
-        }} onClick={onClick}>
+        }} onClick={() =>{
+            setIsSelected(!isSelected);
+            onClick();
+        }}>
 
             {/* selection check mark */}
             <div>
@@ -22,12 +27,12 @@ export default function PictureCard({imgWidth, imgHeight, imgUrl, cardSelected, 
                     fontSize: "20pt",
                     position: "absolute",
                     padding: "10px",
-                    visibility: cardSelected ? "visible" : "hidden"
+                    visibility: isSelected ? "visible" : "hidden"
                 }}/>
             </div>
 
             <div css={{
-                opacity: cardSelected ? 0.35 : 1.0
+                opacity: isSelected ? 0.35 : 1.0
             }}>
                 <img src={imgUrl} alt="picture card" css={{
                     borderRadius: "10px 10px 0 0 ",
