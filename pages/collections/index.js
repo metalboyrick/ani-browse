@@ -3,7 +3,7 @@
 import { useState, useEffect} from 'react';
 import Head from "next/head";
 import {Button, Modal} from "antd";
-import {EditFilled, DeleteFilled} from "@ant-design/icons";
+import {EditFilled, DeleteFilled, FrownOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -195,8 +195,9 @@ export default function CollectionList(){
                 flexWrap:"wrap",
                 justifyContent: "center"
             }}>   
-                {
-                    Object.keys(collectionList).map(function(key, index) {
+
+                { Object.keys(collectionList).length > 0 ?
+                    Object.keys(collectionList).map((key, index) => {
                         return <>
                             <PictureCard 
                                 css={{
@@ -244,8 +245,19 @@ export default function CollectionList(){
                                 </div>
                             </PictureCard>
                         </>;
-                    })
-                }
+                    }) : 
+                    <div
+                        css={{
+                            textAlign: "center",
+                            fontSize: "20pt",
+                            color: Theme.colors.gray
+                        }}
+                    >
+                        <FrownOutlined /><br/>
+                        You haven't added any collections yet!
+                    </div>
+                 }
+                
             </div>
             
 
