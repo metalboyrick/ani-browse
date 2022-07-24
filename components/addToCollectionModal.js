@@ -99,6 +99,7 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
                                 onClick={() => {
                                    selectItem(name);
                                 }}
+                                selectable
                             >
                                 {name}
                             </PictureCard>

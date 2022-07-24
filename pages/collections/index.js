@@ -90,7 +90,11 @@ export default function CollectionList(){
 
         <div css={{
             marginLeft: "20%",
-            marginRight: "20%"
+            marginRight: "20%",
+            "@media (max-width: 768px)": {
+                marginLeft: "5%",
+                marginRight: "5%",
+            }
         }}>
             {/* padder space */}
             <div css={{height: "30px"}}></div>
@@ -98,7 +102,12 @@ export default function CollectionList(){
             {/* header */}
             <div css={{
                 display: "flex",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
+                "@media (max-width: 768px)": {
+                    flexDirection:"column",
+                    alignItems: "center"
+                }
+
             }}>
                 <h1 css={{
                 fontWeight: "bold",
@@ -114,11 +123,13 @@ export default function CollectionList(){
                     + Add a Collection
                 </Button>
             </div>
+            <div css={{height: "30px"}}></div>
             
             {/* the cards */}
             <div css={{
                 display:"flex",
-                flexWrap:"wrap"
+                flexWrap:"wrap",
+                justifyContent: "center"
             }}>   
                 {
                     Object.keys(collectionList).map(function(key, index) {
@@ -128,8 +139,8 @@ export default function CollectionList(){
                                     textAlign: "center"
                                 }}
                                 key={key}
-                                imgWidth="130px" 
-                                imgHeight="195px" 
+                                imgWidth="120px" 
+                                imgHeight="180px" 
                                 imgUrl={collectionList[key].animes.length > 0 ? collectionPics[key] : "../placeholder_cover.png"}
                             >
                                 <span
