@@ -249,7 +249,7 @@ export default function CollectionDetails() {
                                                 cursor: "pointer"
                                             }
                                         }}>
-                                            <strong css={{fontSize: "16px"}}>{item.title.romaji}</strong>
+                                            <strong css={{fontSize: "14px", lineHeight: "14px"}}>{item.title.romaji}</strong>
                                             <br/>
                                             <span
                                                 css={{
@@ -259,7 +259,6 @@ export default function CollectionDetails() {
                                             >
                                                 <StarFilled style={{color: "#F2C94C"}}/> {' '}
                                                 <span css={{fontWeight: "bold"}}>{item.averageScore / 10} </span> <span> / 10</span> {' '}
-                                                 <br/> {item.studios.edges.length ? item.studios.edges[0].node.name : "-"}
                                             </span>
                                         </div>
                                         
