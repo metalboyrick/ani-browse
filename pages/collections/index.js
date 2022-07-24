@@ -3,6 +3,7 @@
 import { useState, useEffect} from 'react';
 import Head from "next/head";
 import {Button, Modal} from "antd";
+import {EditFilled, DeleteFilled} from "@ant-design/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -20,6 +21,8 @@ export default function CollectionList(){
     const storageWorker = new LocalStorageWorker();
 
     const [isShowAddModal, setIsShowAddModal] = useState(false);
+    const [isShowEditModal, setIsShowEditModal] = useState(false);
+    const [editName, setEditName] = useState("");
     const [collectionList, setCollectionList] = useState({});
     const [collectionPics, setCollectionPics] = useState({});
 
@@ -78,7 +81,6 @@ export default function CollectionList(){
 
     // add collection
     const addCollectionHandler = (collectionName) => {
-        // TODO: add collection logic
         if(collectionName){
             storageWorker.addCollection(collectionName);
             updateCollections();
@@ -86,7 +88,18 @@ export default function CollectionList(){
 
         setIsShowAddModal(false);
     };
+    
+    // edit collection
+    // TODO: add error message
+    const editCollection = (oldName, newName) => {
+        console.log("new col. name", newName);
+        if(oldName && newName){
+            storageWorker.editCollection(oldName, newName);
+            updateCollections();
+        }
 
+        setIsShowEditModal(false);
+    };
 
 
     useEffect(() => {
@@ -111,6 +124,20 @@ export default function CollectionList(){
             placeholder="Enter a name for your new collection..." 
             closeHandler={() => setIsShowAddModal(false)}
             onConfirm={addCollectionHandler}
+        /> 
+        : 
+        ""}
+
+        {isShowEditModal ? 
+        <NameModal 
+            title={`Edit Collection "${editName}"`} 
+            placeholder= {`Enter a new name for collection "${editName}"`} 
+            closeHandler= {() => {
+                setEditName("");
+                setIsShowEditModal(false);
+            }}
+            editOldName={editName}
+            onConfirmEdit={editCollection}
         /> 
         : 
         ""}
@@ -167,8 +194,8 @@ export default function CollectionList(){
                                     textAlign: "center"
                                 }}
                                 key={key}
-                                imgWidth="120px" 
-                                imgHeight="180px" 
+                                imgWidth="140px" 
+                                imgHeight="210px" 
                                 imgUrl={collectionList[key].animes.length > 0 ? collectionPics[key] : "../placeholder_cover.png"}
                             >
                                 <strong>{key}</strong>
@@ -181,7 +208,30 @@ export default function CollectionList(){
                                 >
                                     {getRelCreationDate(collectionList[key].dateCreated)}
                                 </span>
-                                <div>
+                                <div css={{
+                                    display:"flex",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                    textAlign: "center",
+                                    marginTop: "10px"
+                                }}>
+                                    <Button type="primary" style={{
+                                        backgroundColor: Theme.colors.primary,
+                                        borderColor: Theme.colors.primary,
+                                        borderRadius: "10px",
+                                        fontSize: "10pt"
+                                    }}
+                                        onClick={() => {
+                                            setEditName(key);
+                                            setIsShowEditModal(true);
+                                        }}
+                                    ><EditFilled color={Theme.colors.white}/></Button>
+                                    <Button type="danger" style={{
+                                        backgroundColor: Theme.colors.danger,
+                                        borderColor: Theme.colors.danger,
+                                        borderRadius: "10px",
+                                        fontSize: "10pt"
+                                    }}><DeleteFilled color={Theme.colors.white}/></Button>
                                 </div>
                             </PictureCard>
                         </>;

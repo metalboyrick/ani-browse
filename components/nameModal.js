@@ -10,7 +10,7 @@ import LocalStorageWorker from '../util/localStorageWorker';
 
 import PictureCard from './pictureCard';
 
-export default function NameModal({closeHandler, placeholder, title, onConfirm}){
+export default function NameModal({closeHandler, placeholder, title, onConfirm, onConfirmEdit, editOldName}){
     
     const storageWorker = new LocalStorageWorker();
 
@@ -26,10 +26,19 @@ export default function NameModal({closeHandler, placeholder, title, onConfirm})
             }} 
                 type="primary"
                 onClick={() => {
-                    // TODO: write collection to local storage
-                    onConfirm(nameInput);
+                    
+                    if(onConfirm){
+                        console.log("add handler called");
+                        onConfirm(nameInput);
+                    } 
+
+                    if(onConfirmEdit && editOldName){
+                        console.log("edit handler called");
+                        onConfirmEdit(editOldName, nameInput);
+                    }
+                        
                 }}
-            >
+            > 
                 Confirm
             </Button>
         );
