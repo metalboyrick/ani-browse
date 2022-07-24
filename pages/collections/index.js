@@ -7,13 +7,18 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import Theme from "../../styles/theme";
-import PictureCard from '../../components/pictureCard';
+import queries from "../../util/query";
+import client from "../../util/apollo-client";
 import LocalStorageWorker from '../../util/localStorageWorker';
+
+import PictureCard from '../../components/pictureCard';
+
 
 export default function CollectionList(){
 
     const storageWorker = new LocalStorageWorker();
-    const [collectionList, setCollectionList] = useState([]);
+    const [collectionList, setCollectionList] = useState({});
+    const [collectionPics, setCollectionPics] = useState({});
 
     const addCollection = () => {
         storageWorker.addCollection("favourite anime");
@@ -21,14 +26,53 @@ export default function CollectionList(){
 
     const getRelCreationDate = (creationDate) => {
         dayjs.extend(relativeTime);
+        console.log(dayjs(creationDate).fromNow());
         return dayjs(creationDate).fromNow();
     };
 
+    // helper function to fetcch cover images
+    const fetchImage = async (animeId) => {
+        const { loading, error, data } = await client.query({
+            query: queries.GET_ANIME_DETAILS,
+            variables: {
+                id: animeId
+            }
+        });
+    
+        // TODO: handle errors
+        console.log(data.Media.coverImage.large);
+
+        return data.Media.coverImage.large;
+
+    }
+
     useEffect(() => {
-        setCollectionList(storageWorker.getCollectionList());
+        let tempColList = storageWorker.getCollectionList();
+        setCollectionList(tempColList);
+
 
         // fetch data (cannot server side since LocalStorage is located at client side)
+        let picDict = {};
+        let promiseArr = [];
+        let collectionNames = Object.keys(tempColList);
+        for(let i = 0; i < collectionNames.length; i++){
+            if(tempColList[collectionNames[i]].animes.length === 0) continue;
 
+            // fetch the data
+            promiseArr.push(
+                fetchImage(tempColList[collectionNames[i]].animes[0])
+                .then(coverImage => {
+                    picDict[collectionNames[i]] = coverImage;    
+                })
+            );
+            
+        }
+
+        Promise.all(promiseArr)
+        .then(() => {
+            setCollectionPics(picDict);
+        })
+        
     }, []);
 
     
@@ -66,9 +110,6 @@ export default function CollectionList(){
                     borderColor: Theme.colors.success,
                     borderRadius: "10px"
                 }} type="primary"
-                onClick={() => {
-                    // add collection logic
-                }}
                 >
                     + Add a Collection
                 </Button>
@@ -87,11 +128,18 @@ export default function CollectionList(){
                                     textAlign: "center"
                                 }}
                                 key={key}
-                                imgWidth="120px" 
-                                imgHeight="180px" 
-                                imgUrl={collectionList[key].animes.length > 0 ? "" : "../placeholder_cover.png"}
+                                imgWidth="130px" 
+                                imgHeight="195px" 
+                                imgUrl={collectionList[key].animes.length > 0 ? collectionPics[key] : "../placeholder_cover.png"}
                             >
-                                {getRelCreationDate(collectionList[key].dateCreated)}<br/>
+                                <span
+                                    css={{
+                                        color: Theme.colors.gray,
+                                        fontSize: "0.75rem"
+                                    }}
+                                >
+                                    {getRelCreationDate(collectionList[key].dateCreated)}
+                                </span><br/>
                                 <strong>{key}</strong>
                             </PictureCard>
                         </>;
