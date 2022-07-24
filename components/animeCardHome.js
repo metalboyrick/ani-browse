@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 import {useState} from 'react';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 
 import { StarFilled } from '@ant-design/icons';
 
@@ -88,7 +89,8 @@ export default function AnimeCardHome(props) {
                     }
                 }}
                     src={props.anime.coverImage.large}
-                    alt="" />
+                    alt="" 
+                />
 
                 {/* title */}
                 <div css={{

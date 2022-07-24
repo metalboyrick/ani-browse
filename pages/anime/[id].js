@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
@@ -119,6 +121,7 @@ export default function AnimeDetail({ animeDetail }) {
                     css={{
                         borderRadius: "10px"
                     }}/>
+                   
 
                     {/* MOBILE title card */}
                     {isMobile ? <div>
@@ -154,9 +157,14 @@ export default function AnimeDetail({ animeDetail }) {
                     >
                         + Add to Collections
                     </Button>
-                    <InfoCard title="Collection"> 
+                    <InfoCard title="Collections"> 
                     {currentCollections.size > 0 ? 
-                        (Array.from(currentCollections)).map(item => <><a href="" css={{"&:hover" : {color: Theme.colors.primary} }} >{item}</a> <br/> </>)
+                        (Array.from(currentCollections)).map(item => <>
+                        <Link key={item} href={`/collections/${item}`} >
+                            <span css={{"&:hover":{color:Theme.colors.primary, cursor:"pointer"}}}>{item}</span>
+                        </Link> 
+                        <br/> 
+                        </>)
                     :
                      "You haven't added this show to any Collections!"}
                         
@@ -186,7 +194,7 @@ export default function AnimeDetail({ animeDetail }) {
                         <br />
                         <div>
                             <strong>Genre(s)</strong><br />
-                            {animeDetail.genres.map(item => <>{item} <br/></>)}
+                            {animeDetail.genres.map(item => <span key={item}>{item} <br/></span>)}
                         </div>
                         <br />
                         <div>
@@ -239,8 +247,9 @@ export default function AnimeDetail({ animeDetail }) {
                             display: "flex",
                             flexWrap: "wrap"
                         }}>
-                            {animeDetail.characters.edges.map(item => 
+                            {animeDetail.characters.edges.map((item, index) => 
                             <PictureCard 
+                                key={index}
                                 imgUrl={item.node.image.large}
                                 imgWidth = {isMobile ? "130px" : "140px"}
                                 imgHeight = {isMobile ? "195px" : "210px"}
@@ -256,7 +265,7 @@ export default function AnimeDetail({ animeDetail }) {
                             display: "flex",
                             flexWrap: "wrap"
                         }}>
-                            {animeDetail.tags.map(item => <div css={{
+                            {animeDetail.tags.map(item => <div key={item.id} css={{
                                 backgroundColor: "rgba(255,255,255,0.10)",
                                 borderRadius: "10px",
                                 padding: "10px",

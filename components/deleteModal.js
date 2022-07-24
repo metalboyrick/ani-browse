@@ -52,8 +52,8 @@ export default function DeleteModal({closeHandler, title, onConfirm, deleteName}
         <Modal bodyStyle={{
             backgroundColor: Theme.colors.background,
             color: Theme.colors.white
-        }} title={title} visible={true} onCancel={closeHandler} footer={[<ConfirmButton/>]}>
-           Are you sure you want to delete {deleteName} ? <br/>
+        }} title={`Delete Confirmation: "${title}"`} visible={true} onCancel={closeHandler} footer={[<ConfirmButton/>]}>
+           Are you sure you want to delete {title} ? <br/>
            <span css={{fontWeight: "bold", color: Theme.colors.danger}}>WARNING: This action is not reversible !</span>
         </Modal>
     );
