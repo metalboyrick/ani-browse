@@ -295,7 +295,7 @@ export default function CollectionList(){
                         }}
                     >
                         <FrownOutlined /><br/>
-                        You haven't added any collections yet!
+                        You haven&apos;t added any collections yet!
                     </div>
                  }
                 

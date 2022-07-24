@@ -281,7 +281,7 @@ export default function CollectionDetails() {
                                 }}
                             >
                                 <FrownOutlined /><br/>
-                                You haven't added any anime to this collection yet!
+                                You haven&apos;t added any anime to this collection yet!
                             </div>
                         </div>
                         
