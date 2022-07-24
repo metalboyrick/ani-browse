@@ -116,11 +116,12 @@ export default function AnimeDetail({ animeDetail }) {
                     flex: "1",
                     textAlign: "center"
                 }}>
-                    <Image src={isMobile? animeDetail.coverImage.medium : animeDetail.coverImage.large} 
+                    <img src={isMobile? animeDetail.coverImage.medium : animeDetail.coverImage.large} 
                     alt={`${animeDetail.title.romaji} cover`} 
                     css={{
                         borderRadius: "10px"
                     }}/>
+                   
 
                     {/* MOBILE title card */}
                     {isMobile ? <div>

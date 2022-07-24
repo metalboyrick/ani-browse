@@ -8,10 +8,6 @@ const Theme = {
         white: '#FFFFFF',
         gray: '#989898'
     },
-    mediaQuery: {
-        breakpoints: [576, 768, 992, 1200],
-        bpMap: function (bp){return `@media (min-width: ${bp}px)`;}
-    },
     fontSize: {
         reg: '12pt',
         sectionHeader: '20pt',

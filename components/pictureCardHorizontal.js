@@ -24,11 +24,12 @@ export default function PictureCardHorizontal({imgWidth, imgHeight, imgUrl, styl
                 display: "flex",
                 flexDirection:"row"
             }}>
-                <Image src={imgUrl} alt="picture card" css={{
+                <img src={imgUrl} alt="picture card" layout="fill" css={{
                     borderRadius: "10px 0 0 10px ",
                     width: imgWidth ? imgWidth : "auto",
                     height: imgHeight ? imgHeight : "auto",
-                }}/>
+                }}  
+                />
                 <div css={{
                     padding: "16px", 
                     textAlign: "left", 

@@ -38,11 +38,12 @@ export default function PictureCard({imgWidth, imgHeight, imgUrl, initSelected, 
             <div css={{
                 opacity: isSelected ? 0.35 : 1.0
             }}>
-                <Image src={imgUrl} alt="picture card" css={{
+                <img src={imgUrl} alt="picture card" css={{
                     borderRadius: "10px 10px 0 0 ",
                     width: imgWidth ? imgWidth : "auto",
                     height: imgHeight ? imgHeight : "auto",
-                }}/>
+                }} 
+                />
                 <div css={{padding: "10px", textAlign: "center"}}>
                     {children}
                 </div>

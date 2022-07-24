@@ -78,7 +78,7 @@ export default function AnimeCardHome(props) {
                 </div>
                 
                 {/* thumbnail */}
-                <Image css={{
+                <img css={{
                     borderRadius: "10px",
                     height: "360px",
                     width: "240px",
@@ -89,7 +89,8 @@ export default function AnimeCardHome(props) {
                     }
                 }}
                     src={props.anime.coverImage.large}
-                    alt="" />
+                    alt="" 
+                />
 
                 {/* title */}
                 <div css={{
