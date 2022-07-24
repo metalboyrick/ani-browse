@@ -8,7 +8,11 @@ export default class LocalStorageWorker {
     }
 
     addCollection(name){
+
         if (typeof window !== 'undefined') {
+
+            name = name.trim();
+
             // get data from local storage
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
             
@@ -34,7 +38,13 @@ export default class LocalStorageWorker {
     }
 
     deleteCollection(name){
+
+        
+
         if (typeof window !== 'undefined') {
+
+            name = name.trim();
+
             // parse and delete
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));
             delete collectionList[name];
@@ -48,6 +58,10 @@ export default class LocalStorageWorker {
     editCollection(oldName, newName){
 
         if (typeof window !== 'undefined') {
+
+            oldName = oldName.trim();
+            newName = newName.trim();
+
             if(oldName === newName) return;
 
             let collectionList = JSON.parse(localStorage.getItem("aniBrowserData"));

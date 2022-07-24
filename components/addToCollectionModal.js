@@ -112,7 +112,6 @@ export default function AddToCollectionModal({closeHandler, animeId, initSelect}
     };
 
     // add collection
-    // TODO: add error message
     const addCollectionHandler = (collectionName) => {
         try{
             if(collectionName){
