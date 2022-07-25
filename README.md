@@ -1,7 +1,7 @@
 # AniBrowser
 
-This is a simple web app that can browse animes with the AniList API.
-Link : ```https://ani-browse.vercel.app/```.
+This is a simple web app that can browse animes with the AniList API. Supports PWA
+Link : https://ani-browse.vercel.app/.
 
 ## Environment Setup
 
@@ -30,12 +30,12 @@ This application is deployed with Vercel.
 # Credits
 
 ## Backend
-- Anilist GraphQL API : ```https://anilist.gitbook.io/anilist-apiv2-docs/overview/graphql/getting-started```.
+- Anilist GraphQL API : https://anilist.gitbook.io/anilist-apiv2-docs/overview/graphql/getting-started.
 ## Dependencies
-- react.js : ```https://reactjs.org/```.
-- next.js : ```https://nextjs.org/```.
-- emotion : ```https://emotion.sh/docs/introduction```.
-- dayjs : ```https://day.js.org/```.
-- Apollo Client : ```https://www.apollographql.com/docs/react/```.
-- Ant Design : ```https://ant.design/```.
-- Vercel : ```https://vercel.com/```.
+- react.js : https://reactjs.org/.
+- next.js : https://nextjs.org/.
+- emotion : https://emotion.sh/docs/introduction.
+- dayjs : https://day.js.org/.
+- Apollo Client : https://www.apollographql.com/docs/react/.
+- Ant Design : https://ant.design/.
+- Vercel : https://vercel.com/.
