@@ -18,7 +18,8 @@ export default function AnimeCardHome(props) {
     const isMobile = useMediaQuery({query: "(max-width: 768px)"});
 
     return (
-        <Link href={`/anime/${props.anime.id}`}>
+        <div css={{"&:hover": {cursor: "pointer"}}}>
+             <Link href={`/anime/${props.anime.id}`}>
             <div css={{
                 padding: 0,
                 display: "flex",
@@ -103,5 +104,7 @@ export default function AnimeCardHome(props) {
                 }}>{props.anime.title.romaji}</div>
             </div>
         </Link>
+        </div>
+       
     );
 }
