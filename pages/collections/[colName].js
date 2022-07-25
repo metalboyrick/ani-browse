@@ -233,56 +233,65 @@ export default function CollectionDetails() {
                                             width: "100%",
                                         }
                                     }}
-                                    // css={{
-                                    //     textAlign: "center"
-                                    // }}
                                     key={item.id}
                                     imgWidth="95px" 
                                     imgHeight="143px" 
                                     imgUrl={item.coverImage.medium ? item.coverImage.medium : "../placeholder_cover.png"}
                                 >
-                                    <Link 
-                                        href={`/anime/${item.id}`}
-                                    >
-                                        <div css={{
-                                            "&:hover":{
-                                                cursor: "pointer"
-                                            }
-                                        }}>
-                                            <strong css={{fontSize: "14px", lineHeight: "14px"}}>{item.title.romaji}</strong>
-                                            <br/>
-                                            <span
-                                                css={{
-                                                    color: Theme.colors.gray,
-                                                    fontSize: "0.75rem"
-                                                }}
-                                            >
-                                                <StarFilled style={{color: "#F2C94C"}}/> {' '}
-                                                <span css={{fontWeight: "bold"}}>{item.averageScore / 10} </span> <span> / 10</span> {' '}
-                                            </span>
-                                        </div>
-                                        
-                                    </Link>
                                     <div css={{
-                                        display:"flex",
-                                        justifyContent: "end",
                                         width: "100%",
-                                        textAlign: "left",
-                                        marginTop: "10px"
+                                        height: "100%",
+                                        display:"flex",
+                                        flexDirection:"column",
+                                        justifyContent:"space-between"
                                     }}>
-                                        <Button type="danger" style={{
-                                            backgroundColor: Theme.colors.danger,
-                                            borderColor: Theme.colors.danger,
-                                            borderRadius: "10px",
-                                            fontSize: "10pt"
-                                        }}
-                                            onClick={() => {
-                                                setSelectedAnimeId(item.id);
-                                                setSelectedAnimeTitle(item.title.romaji);
-                                                setIsShowDeleteModal(true);
+
+                                        <Link 
+                                            href={`/anime/${item.id}`}
+                                        >
+                                            <div css={{
+                                                "&:hover":{
+                                                    cursor: "pointer"
+                                                }
+                                            }}>
+                                                <strong css={{fontSize: "16px", lineHeight: "14px"}}>{item.title.romaji}</strong>
+                                                <br/>
+                                                <span
+                                                    css={{
+                                                        color: Theme.colors.gray,
+                                                        fontSize: "0.75rem"
+                                                    }}
+                                                >
+                                                    <StarFilled style={{color: "#F2C94C"}}/> {' '}
+                                                    <span css={{fontWeight: "bold"}}>{item.averageScore / 10} </span> <span> / 10</span> {' '}
+                                                </span>
+                                            </div>
+                                            
+                                        </Link>
+                                        <div css={{
+                                            display:"flex",
+                                            justifyContent: "end",
+                                            width: "100%",
+                                            textAlign: "left",
+                                            marginTop: "10px"
+                                        }}>
+                                            <Button type="danger" style={{
+                                                backgroundColor: Theme.colors.danger,
+                                                borderColor: Theme.colors.danger,
+                                                borderRadius: "10px",
+                                                fontSize: "10pt"
                                             }}
-                                        ><DeleteFilled color={Theme.colors.white}/></Button>
+                                                onClick={() => {
+                                                    setSelectedAnimeId(item.id);
+                                                    setSelectedAnimeTitle(item.title.romaji);
+                                                    setIsShowDeleteModal(true);
+                                                }}
+                                            ><DeleteFilled color={Theme.colors.white}/></Button>
+                                        </div>
+
                                     </div>
+                                    
+                                    
                                 </PictureCardHorizontal>
                             </>)
                         :
