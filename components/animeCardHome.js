@@ -24,7 +24,7 @@ export default function AnimeCardHome(props) {
                 display: "flex",
                 flexDirection: "column",
                 margin: "20px 10px 10px 10px",
-                width: "240px",
+                width: "200px",
 
                 "@media (max-width: 768px)": {
                     width: "120px"
@@ -38,8 +38,8 @@ export default function AnimeCardHome(props) {
                 {/* hover info */}
                 <div css={{
                     zIndex : 1, 
-                    height: "360px",
-                    width: "240px",
+                    height: "300px",
+                    width: "200px",
                     position: "absolute",
                     visibility: isHover ? "visible" : "hidden",
                     padding: "20px",
@@ -80,8 +80,8 @@ export default function AnimeCardHome(props) {
                 {/* thumbnail */}
                 <img css={{
                     borderRadius: "10px",
-                    height: "360px",
-                    width: "240px",
+                    height: "300px",
+                    width: "200px",
                     opacity : isHover ? 0.30 : 1.0,
                     "@media (max-width: 768px)": {
                         height: "180px",
